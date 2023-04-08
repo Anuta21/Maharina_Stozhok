@@ -15,6 +15,11 @@ export const T1 = styled(font)`
 
 export const T2 = styled(font)`
   font-weight: 700;
+  font-size: 18px;
+`;
+
+export const T3 = styled(font)`
+  font-weight: 700;
   font-size: 42px;
 `;
 

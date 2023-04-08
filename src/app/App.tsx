@@ -1,14 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { LandingPage } from "./pages";
+import { LandingPage, BookPage } from "./pages";
 
-function App() {
+export const App: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/book" element={<BookPage />} />
       </Routes>
     </Router>
   );
-}
-
-export default App;
+};
