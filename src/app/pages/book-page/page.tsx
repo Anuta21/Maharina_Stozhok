@@ -1,4 +1,4 @@
-import { NavBar } from "../../components";
+import { NavBar, Footer } from "../../components";
 import { BookPageTempProps, comments } from "./constants";
 import { IBookPage, IComment } from "./models";
 import {
@@ -73,6 +73,7 @@ export const BookPage: React.FC<IBookPage> = ({
           ))}
         </CommentsContainer>
       </Wrapper>
+      <Footer />
     </>
   );
 };
