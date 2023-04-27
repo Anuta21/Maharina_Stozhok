@@ -1,3 +1,5 @@
+import { INetwork } from "./models";
+
 export const helpConstants = [
   "Payment",
   "Delivery",
@@ -10,4 +12,8 @@ export const infoConstants = [
   "Questions/Answers",
 ];
 export const sectionsConstants = ["Catalog", "About us", "Contacts"];
-export const networkConstants = ["Instagram", "Twitter", "Facebook"];
+export const networkConstants: Array<INetwork> = [
+  { name: "Instagram", link: "https://www.instagram.com/" },
+  { name: "Twitter", link: "https://twitter.com/?lang=uk" },
+  { name: "Facebook", link: "https://uk-ua.facebook.com/" },
+];

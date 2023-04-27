@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { S1 } from "../../common/assets";
+import { S1, Color } from "../../common/assets";
 
 export const NavigationWrapper = styled.div`
   width: 100%;
@@ -26,6 +26,12 @@ export const NavigationItem = styled(S1)`
   text-align: center;
 
   cursor: pointer;
+
+  :active,
+  :focus,
+  :hover {
+    color: ${Color.Highlight};
+  }
 `;
 
 export const BookIcon = styled.img`

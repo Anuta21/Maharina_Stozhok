@@ -1,6 +1,5 @@
-import bookIcon from "../../common/assets/images/book-icon.svg";
-import userIcon from "../../common/assets/images/user-icon.svg";
-import basket from "../../common/assets/images/basket.svg";
+import { useNavigate } from "react-router-dom";
+import { Images } from "../../common/assets";
 import { navigationTitles } from "./constants";
 import {
   CenterItems,
@@ -13,17 +12,37 @@ import {
 } from "./styles";
 
 export const NavBar: React.FC = () => {
+  const navigate = useNavigate();
+  const navBarClick = (item: string) => {
+    switch (item) {
+      case navigationTitles[0]:
+        navigate("/catalog");
+        break;
+      case navigationTitles[1]:
+        // add navigation
+        break;
+      case navigationTitles[2]:
+        // add navigation
+        break;
+    }
+  };
   return (
     <NavigationWrapper>
-      <BookIcon src={bookIcon} alt="bookIcon" />
+      <BookIcon
+        src={Images.bookIcon}
+        alt="bookIcon"
+        onClick={() => navigate("/")}
+      />
       <CenterItems>
         {navigationTitles.map((item, index) => (
-          <NavigationItem key={index}>{item}</NavigationItem>
+          <NavigationItem key={index} onClick={() => navBarClick(item)}>
+            {item}
+          </NavigationItem>
         ))}
       </CenterItems>
       <RightNavigationPart>
-        <UserIcon src={userIcon} alt="userIcon" />
-        <BasketIcon src={basket} alt="basket" />
+        <UserIcon src={Images.userIcon} alt="userIcon" />
+        <BasketIcon src={Images.basket} alt="basket" />
       </RightNavigationPart>
     </NavigationWrapper>
   );
