@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { Rating } from "@mui/material";
 import { NavBar, Footer } from "../../components";
 import { BookPageTempProps, comments } from "./constants";
 import { IBookPage, IComment } from "./models";
@@ -26,7 +29,6 @@ import {
   AuthorName,
   AddButtonText,
 } from "./styles";
-import { Rating } from "@mui/material";
 
 export const BookPage: React.FC<IBookPage> = ({
   authorName = BookPageTempProps.authorName,
@@ -36,6 +38,11 @@ export const BookPage: React.FC<IBookPage> = ({
   imageUrl = BookPageTempProps.imageUrl,
   info = BookPageTempProps.info,
 }) => {
+  const { id } = useParams();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, []);
   return (
     <>
       <NavBar />
@@ -43,7 +50,10 @@ export const BookPage: React.FC<IBookPage> = ({
         <BookCard>
           <ImageWrapper src={imageUrl}></ImageWrapper>
           <InfoWrapper>
-            <BookTitle>{bookName}</BookTitle>
+            <BookTitle>
+              {bookName}
+              {id}
+            </BookTitle>
             <AuthorName>{authorName}</AuthorName>
             <RatingWrapper>
               <Rating
@@ -59,7 +69,7 @@ export const BookPage: React.FC<IBookPage> = ({
             </RatingWrapper>
             <Info>{info}</Info>
             <BottomContainer>
-              <Price>{`${price} грн`}</Price>
+              <Price>{`${price} UAH`}</Price>
               <AddButton>
                 <AddButtonText>ADD TO CART</AddButtonText>
               </AddButton>

@@ -55,4 +55,7 @@ export const List = styled.ul`
 
 export const ListItem = styled(ST1)`
   color: ${Color.White};
+  :hover {
+    cursor: pointer;
+  }
 `;

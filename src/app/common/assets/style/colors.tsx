@@ -7,4 +7,6 @@ export enum Color {
   DarkGrey = "#213944",
   Pink = "#f0a4dc",
   Yellow = "#f6eabf",
+  Sandy = "#f5efe2",
+  Highlight = "#6d5027b3",
 }

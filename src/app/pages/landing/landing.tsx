@@ -1,4 +1,4 @@
-import landingBook from "../../common/assets/images/landing-book.png";
+import { Images } from "../../common/assets";
 import { NavBar } from "../../components";
 import {
   MainText,
@@ -16,7 +16,7 @@ export const LandingPage: React.FC = () => {
         <MainText>Books of all genres</MainText>
       </TextContainer>
       <BookContainer>
-        <BookImg src={landingBook} alt="book" />
+        <BookImg src={Images.landingBook} alt="book" />
       </BookContainer>
     </Wrapper>
   );

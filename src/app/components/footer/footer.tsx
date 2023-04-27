@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import { ST1, Color } from "../../common/assets";
 import {
   helpConstants,
@@ -17,6 +18,21 @@ import {
 } from "./styles";
 
 export const Footer: React.FC = () => {
+  const navigate = useNavigate();
+
+  const sectionClick = (item: string) => {
+    switch (item) {
+      case sectionsConstants[0]:
+        navigate("/catalog");
+        break;
+      case sectionsConstants[1]:
+        // add navigation
+        break;
+      case sectionsConstants[2]:
+        // add navigation
+        break;
+    }
+  };
   return (
     <FooterWrapper>
       <TopFooterWrapper>
@@ -61,7 +77,7 @@ export const Footer: React.FC = () => {
           <List>
             {sectionsConstants.map((item) => (
               <li>
-                <ListItem>{item}</ListItem>
+                <ListItem onClick={() => sectionClick(item)}>{item}</ListItem>
               </li>
             ))}
           </List>
@@ -71,7 +87,9 @@ export const Footer: React.FC = () => {
           <List>
             {networkConstants.map((item) => (
               <li>
-                <ListItem>{item}</ListItem>
+                <a href={item.link}>
+                  <ListItem>{item.name}</ListItem>
+                </a>
               </li>
             ))}
           </List>
