@@ -1,0 +1,2 @@
+export const aboutUsText =
+  "Welcome to our online bookstore! We offer a wide selection of books in various genres, including fiction, non-fiction, children's books, and more. Our collection features both classic and contemporary titles, ensuring that there is something for every reader. With easy navigation and secure payment options, shopping for books has never been easier. Whether you're looking for a new novel to dive into or a gift for a book lover, we've got you covered. Browse our collection and start exploring today!";
