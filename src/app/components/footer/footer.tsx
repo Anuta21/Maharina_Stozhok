@@ -26,10 +26,10 @@ export const Footer: React.FC = () => {
         navigate("/catalog");
         break;
       case sectionsConstants[1]:
-        // add navigation
+        navigate("/about-us");
         break;
       case sectionsConstants[2]:
-        // add navigation
+        navigate("/contact");
         break;
     }
   };
@@ -57,7 +57,9 @@ export const Footer: React.FC = () => {
           <List>
             {helpConstants.map((item, index) => (
               <li key={index}>
-                <ListItem>{item}</ListItem>
+                <ListItem onClick={() => navigate("/about-us")}>
+                  {item}
+                </ListItem>
               </li>
             ))}
           </List>
@@ -67,7 +69,9 @@ export const Footer: React.FC = () => {
           <List>
             {infoConstants.map((item, index) => (
               <li key={index}>
-                <ListItem>{item}</ListItem>
+                <ListItem onClick={() => navigate("/about-us")}>
+                  {item}
+                </ListItem>
               </li>
             ))}
           </List>

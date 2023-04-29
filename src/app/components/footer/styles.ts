@@ -25,7 +25,6 @@ export const TopFooterWrapper = styled.div`
 export const BottomFooterWrapper = styled.div`
   width: 100%;
   height: 60%;
-  border: 1px solid black;
   background-color: ${Color.Black};
   color: ${Color.White};
 
