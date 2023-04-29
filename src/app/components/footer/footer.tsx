@@ -55,8 +55,8 @@ export const Footer: React.FC = () => {
         <BottomItem>
           <Header style={{ color: Color.White }}>HELP</Header>
           <List>
-            {helpConstants.map((item) => (
-              <li>
+            {helpConstants.map((item, index) => (
+              <li key={index}>
                 <ListItem>{item}</ListItem>
               </li>
             ))}
@@ -65,8 +65,8 @@ export const Footer: React.FC = () => {
         <BottomItem>
           <Header style={{ color: Color.White }}>INFORMATION</Header>
           <List>
-            {infoConstants.map((item) => (
-              <li>
+            {infoConstants.map((item, index) => (
+              <li key={index}>
                 <ListItem>{item}</ListItem>
               </li>
             ))}
@@ -75,8 +75,8 @@ export const Footer: React.FC = () => {
         <BottomItem>
           <Header style={{ color: Color.White }}>SECTIONS</Header>
           <List>
-            {sectionsConstants.map((item) => (
-              <li>
+            {sectionsConstants.map((item, index) => (
+              <li key={index}>
                 <ListItem onClick={() => sectionClick(item)}>{item}</ListItem>
               </li>
             ))}
@@ -85,8 +85,8 @@ export const Footer: React.FC = () => {
         <BottomItem>
           <Header style={{ color: Color.White }}>SOCIAL NETWORK</Header>
           <List>
-            {networkConstants.map((item) => (
-              <li>
+            {networkConstants.map((item, index) => (
+              <li key={index}>
                 <a href={item.link}>
                   <ListItem>{item.name}</ListItem>
                 </a>

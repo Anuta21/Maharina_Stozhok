@@ -4,3 +4,18 @@ export interface IBookData {
   price: number;
   handleCardClick: () => void;
 }
+
+export interface IButtonProps {
+  isDark: boolean;
+}
+
+export interface IFilterItemsShow {
+  sort: boolean;
+  author: boolean;
+  genre: boolean;
+}
+
+export interface IFilterPriceProps {
+  from: string;
+  to: string;
+}

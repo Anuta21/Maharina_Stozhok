@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Color, Images } from "../../common/assets";
+import { Color, Images, S2, ST4 } from "../../common/assets";
+import { IButtonProps } from "./models";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -10,12 +11,6 @@ export const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
-`;
-
-export const FilterComp = styled.div`
-  width: 200px;
-  height: 600px;
-  border: 1px solid black;
 `;
 
 export const RightPart = styled.div`
@@ -55,7 +50,7 @@ export const BookImage = styled.img`
   height: 270px;
 `;
 
-export const InputField = styled.input`
+export const SearchInputField = styled.input`
   margin-bottom: 30px;
   border: 1px solid ${Color.Black};
 
@@ -84,4 +79,121 @@ export const PaginationWrapper = styled.div`
   padding: 30px 0px;
   display: flex;
   justify-content: flex-end;
+`;
+
+export const FilterWrapper = styled.div`
+  width: 200px;
+  /* height: 460px; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const FilterHeader = styled.div`
+  border-bottom: 1px solid ${Color.Black};
+  padding-bottom: 25px;
+  width: 100%;
+`;
+
+export const FilterItem = styled.div`
+  border-bottom: 1px solid ${Color.Black};
+  padding: 22px 0;
+  width: 100%;
+`;
+
+export const FilterShowedItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Button = styled.button<IButtonProps>`
+  border: 1px solid ${Color.Black};
+  margin-bottom: 10px;
+  background-color: ${(props) => (props.isDark ? Color.Black : Color.Sandy)};
+  height: 40px;
+  width: 180px;
+
+  cursor: pointer;
+`;
+
+export const PlusMinusButton = styled(S2)`
+  margin-right: 10px;
+
+  cursor: pointer;
+`;
+
+export const PriceInputFieldWrapper = styled.div`
+  position: relative;
+`;
+
+export const PriceInputField = styled.input`
+  border: 1px solid ${Color.Black};
+
+  background-color: ${Color.Sandy};
+  height: 30px;
+  width: 60px;
+  padding-left: 5px;
+
+  :active,
+  :focus,
+  :hover {
+    outline: none;
+    border-color: ${Color.Highlight};
+  }
+
+  ::placeholder {
+    font-family: "Playfair Display";
+    font-size: 12px;
+    color: ${Color.Highlight};
+    opacity: 1;
+  }
+
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+`;
+
+export const UAHText = styled(ST4)`
+  position: absolute;
+  top: 10px;
+  right: 5px;
+`;
+
+export const PriceWrapper = styled.div`
+  width: 100%;
+  margin-top: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+`;
+
+export const PriceFilterItem = styled.div`
+  width: 100%;
+  margin: 22px 0;
+`;
+
+export const List = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 20px 0 0 0;
+`;
+
+export const ListItem = styled.li`
+  font-family: "Playfair Display";
+  padding-bottom: 8px;
+
+  cursor: pointer;
+
+  :active,
+  :focus,
+  :hover {
+    color: ${Color.Highlight};
+  }
 `;

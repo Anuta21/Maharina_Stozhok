@@ -56,3 +56,8 @@ export const ST3 = styled(font)`
   font-weight: 400;
   font-size: 20px;
 `;
+
+export const ST4 = styled(font)`
+  font-weight: 400;
+  font-size: 12px;
+`;
