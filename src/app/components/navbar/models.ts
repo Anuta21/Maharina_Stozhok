@@ -2,13 +2,6 @@ export interface IBooksList {
   showScroll: boolean;
 }
 
-export interface IBook {
-  picture: string;
-  author: string;
-  info: string;
-  price: number;
-}
-
 export interface IUser {
   name: string;
   email: string;
