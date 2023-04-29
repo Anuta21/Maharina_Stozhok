@@ -56,8 +56,14 @@ export const ST3 = styled(font)`
   font-weight: 400;
   font-size: 20px;
 `;
-
 export const ST4 = styled(font)`
   font-weight: 400;
+  font-size: 12px;
+`;
+
+// --- Bold font
+
+export const B1 = styled(font)`
+  font-weight: 900;
   font-size: 12px;
 `;
