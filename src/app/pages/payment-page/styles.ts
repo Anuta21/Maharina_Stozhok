@@ -75,7 +75,7 @@ export const Line = styled.div`
   border-bottom: 1px solid ${Color.Black};
 `;
 
-// Left PArt Style
+// Left Part Style
 
 export const LeftPart = styled.div`
   height: 100%;
@@ -85,11 +85,24 @@ export const LeftPart = styled.div`
 `;
 
 export const LeftHeader = styled(T3)`
-  margin: 10px 0 30px 0;
+  margin: 30px 0 20px 0;
 `;
 
-export const InputField = styled.input`
-  width: 60%;
+export const LongInputContainer = styled.div`
+  width: 80%;
+  margin: 80px 0 25px 10%;
+`;
+
+export const LongInputField = styled.input`
+  width: 100%;
+  height: 30px;
+
+  background: ${Color.Sandy};
+  font-family: "Playfair Display";
+`;
+
+export const ShortInputField = styled.input`
+  width: 100%;
   height: 30px;
 
   margin-bottom: 25px;
@@ -98,11 +111,20 @@ export const InputField = styled.input`
   font-family: "Playfair Display";
 `;
 
+export const ShortInputsContainer = styled.div`
+  width: 100%;
+  height: 30px;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
 export const InputHeader = styled(T1)`
   margin-bottom: 10px;
 `;
 
-export const OrderButton = styled.button`
+export const ConfirmButton = styled.button`
   width: 70%;
   height: 45px;
 
@@ -118,4 +140,25 @@ export const OrderButton = styled.button`
 
 export const TextButton = styled(T2)`
   color: ${Color.White};
+`;
+
+export const CardFrame = styled.div`
+  width: 80%;
+  height: 50%;
+
+  margin-top: 50px;
+  border: 1px solid ${Color.Black};
+`;
+
+export const CardImagesContainer = styled.div`
+  position: relative;
+  height: 40px;
+  width: 100%;
+`;
+
+export const VisaMasterCardImage = styled.img`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  height: 100%;
 `;

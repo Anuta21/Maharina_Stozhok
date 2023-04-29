@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-import { T2 } from "../../common/assets";
+import { S1 } from "../../common/assets";
 import { BookItemComponent, NavBar } from "../../components";
 import {
   books,
@@ -16,23 +15,30 @@ import {
   UnderlinedPrice,
   Line,
   LeftHeader,
-  InputField,
-  InputHeader,
-  OrderButton,
+  ConfirmButton,
   TextButton,
+  CardFrame,
+  LongInputField,
+  ShortInputField,
+  ShortInputsContainer,
+  InputHeader,
+  LongInputContainer,
+  CardImagesContainer,
+  VisaMasterCardImage,
 } from "./styles";
+import logo from "./images/visa-mastercard-logo.png";
+import { useNavigate } from "react-router-dom";
 
-export const DeliveryCardPage: React.FC = () => {
+export const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Wrapper>
       <NavBar />
       <MainContainer>
         <LeftPart>
-          <LeftHeader>Delivery Information</LeftHeader>
-          <DeliveryForm />
-          <T2>Free delivery from 1000 UAH purchase.</T2>
-          <T2>Free book available for all order over 2000 UAH.</T2>
+          <LeftHeader>Payment</LeftHeader>
+          <S1>All transactions are secure and encrypted</S1>
+          <PaymentCardComponent />
         </LeftPart>
 
         <RightPart>
@@ -49,37 +55,16 @@ export const DeliveryCardPage: React.FC = () => {
             ))}
           </BooksList>
           <RightPartPriceComponent />
-          <OrderButton onClick={() => navigate("/payment")}>
-            <TextButton>ORDER</TextButton>
-          </OrderButton>
+          <ConfirmButton onClick={() => navigate("")}>
+            <TextButton>CONFIRM DELIVERY</TextButton>
+          </ConfirmButton>
         </RightPart>
       </MainContainer>
     </Wrapper>
   );
 };
 
-export const DeliveryForm: React.FC = () => {
-  return (
-    <form>
-      <InputHeader>Name</InputHeader>
-      <InputField></InputField>
-
-      <InputHeader>Surame</InputHeader>
-      <InputField></InputField>
-
-      <InputHeader>City</InputHeader>
-      <InputField></InputField>
-
-      <InputHeader>Street and number</InputHeader>
-      <InputField></InputField>
-
-      <InputHeader>Phone</InputHeader>
-      <InputField></InputField>
-    </form>
-  );
-};
-
-export const RightPartPriceComponent: React.FC = () => {
+const RightPartPriceComponent: React.FC = () => {
   return (
     <>
       <PriceUnderlinedItem>
@@ -97,5 +82,32 @@ export const RightPartPriceComponent: React.FC = () => {
         <UnderlinedPrice>150 hrn</UnderlinedPrice>
       </PriceUnderlinedItem>
     </>
+  );
+};
+
+const PaymentCardComponent: React.FC = () => {
+  return (
+    <CardFrame>
+      <CardImagesContainer>
+        <VisaMasterCardImage src={logo} />
+      </CardImagesContainer>
+
+      <LongInputContainer>
+        <InputHeader>Card Number</InputHeader>
+        <LongInputField />
+      </LongInputContainer>
+
+      <ShortInputsContainer>
+        <div>
+          <InputHeader>Date</InputHeader>
+          <ShortInputField />
+        </div>
+
+        <div>
+          <InputHeader>CVV</InputHeader>
+          <ShortInputField />
+        </div>
+      </ShortInputsContainer>
+    </CardFrame>
   );
 };

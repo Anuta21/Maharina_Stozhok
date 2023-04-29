@@ -6,5 +6,6 @@ export * from "./about-us-page";
 export * from "./delivery-card-page";
 export * from "./login";
 export * from "./sigh-up";
+export * from "./payment-page";
 export * from "./not-found";
 export * from "./thanks";

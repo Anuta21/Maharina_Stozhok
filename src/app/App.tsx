@@ -6,6 +6,7 @@ import {
   ContactPage,
   AboutUsPage,
   DeliveryCardPage,
+  PaymentPage,
   LoginPage,
   SighUpPage,
   NotFoundPage,
@@ -22,6 +23,7 @@ export const App: React.FC = () => {
         <Route path="contact" element={<ContactPage />} />
         <Route path="about-us" element={<AboutUsPage />} />
         <Route path="delivery" element={<DeliveryCardPage />} />
+        <Route path="payment" element={<PaymentPage />} />
         <Route path="/thanks" element={<ThanksPage />} />
 
         <Route path="/login" element={<LoginPage />} />
