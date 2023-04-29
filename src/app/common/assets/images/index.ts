@@ -6,6 +6,8 @@ import basket from "./basket.svg";
 import mark from "./mark.svg";
 import eyeOpen from "./eye-open.svg";
 import eyeClosed from "./eye-closed.svg";
+import arrow from "./arrow.svg";
+import thanks from "./thanks.svg";
 
 export const Images = {
   landingBook,
@@ -16,4 +18,6 @@ export const Images = {
   mark,
   eyeOpen,
   eyeClosed,
+  arrow,
+  thanks,
 };
