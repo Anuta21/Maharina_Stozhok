@@ -4,6 +4,8 @@ import bookIcon from "./book-icon.svg";
 import userIcon from "./user-icon.svg";
 import basket from "./basket.svg";
 import mark from "./mark.svg";
+import eyeOpen from "./eye-open.svg";
+import eyeClosed from "./eye-closed.svg";
 
 export const Images = {
   landingBook,
@@ -12,4 +14,6 @@ export const Images = {
   userIcon,
   basket,
   mark,
+  eyeOpen,
+  eyeClosed,
 };

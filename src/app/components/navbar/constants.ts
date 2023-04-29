@@ -1,4 +1,4 @@
-import { IBook } from "./models";
+import { IBook, IUser } from "./models";
 
 export const navigationTitles = ["CATALOG", "ABOUT US", "CONTACTS"];
 
@@ -34,3 +34,5 @@ export const books: Array<IBook> = [
 ];
 
 export const maxBooksCountWithoutScroll = 3;
+
+export const user: IUser = { name: "Tom", email: "tom@gmail.com" };

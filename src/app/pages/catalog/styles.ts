@@ -83,7 +83,6 @@ export const PaginationWrapper = styled.div`
 
 export const FilterWrapper = styled.div`
   width: 200px;
-  /* height: 460px; */
   display: flex;
   flex-direction: column;
   align-items: center;

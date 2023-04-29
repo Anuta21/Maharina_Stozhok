@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { Images, S2, T2, B1, ST1, ST2 } from "../../common/assets";
+import { Images, S2, T2, B1, ST1, ST2, ST3 } from "../../common/assets";
 import {
   books,
   maxBooksCountWithoutScroll,
   navigationTitles,
+  user,
 } from "./constants";
 import {
   CenterItems,
@@ -15,7 +16,7 @@ import {
   BasketIcon,
   Basket,
   Wrapper,
-  BasketBar,
+  Bar,
   BooksList,
   ButtonContainer,
   BuyButton,
@@ -30,14 +31,24 @@ import {
   DeleteButton,
   CountButton,
   PlusMinus,
+  Account,
+  InnerPartAccount,
+  Exit,
 } from "./styles";
-import { ShoppingBagOutlined, ClearOutlined } from "@mui/icons-material";
+import {
+  ShoppingBagOutlined,
+  ClearOutlined,
+  ExitToApp,
+} from "@mui/icons-material";
 import { useState } from "react";
-import { IBasketComponentProps } from "./models";
+import { IShowComponentProps, IAccountComponentProps } from "./models";
 
 export const NavBar: React.FC = () => {
   const [showBasket, setShowBasket] = useState(false);
+  const [showAccount, setShowAccount] = useState(false);
+
   const navigate = useNavigate();
+
   const navBarClick = (item: string) => {
     switch (item) {
       case navigationTitles[0]:
@@ -54,6 +65,7 @@ export const NavBar: React.FC = () => {
 
   return (
     <Wrapper>
+      {showAccount && <AccountComponent user={user} setShow={setShowAccount} />}
       <BasketComponent
         show={showBasket}
         setShow={setShowBasket}
@@ -72,12 +84,17 @@ export const NavBar: React.FC = () => {
           ))}
         </CenterItems>
         <RightNavigationPart>
-          <UserIcon src={Images.userIcon} alt="userIcon" />
+          <UserIcon
+            src={Images.userIcon}
+            alt="userIcon"
+            onClick={() => setShowAccount(true)}
+            show={showAccount || showBasket}
+          />
           <BasketIcon
             src={Images.basket}
             alt="basket"
             onClick={() => setShowBasket(true)}
-            show={showBasket}
+            show={showAccount || showBasket}
           />
         </RightNavigationPart>
       </NavigationWrapper>
@@ -85,19 +102,19 @@ export const NavBar: React.FC = () => {
   );
 };
 
-export const BasketComponent: React.FC<IBasketComponentProps> = ({
+export const BasketComponent: React.FC<IShowComponentProps> = ({
   show,
   setShow,
 }) => {
   return (
     <Basket show={show} setShow={setShow}>
-      <BasketBar>
+      <Bar>
         <Cross onClick={() => setShow?.(false)}>
           <ClearOutlined />
         </Cross>
         <T2>Your basket</T2>
         <ShoppingBagOutlined />
-      </BasketBar>
+      </Bar>
 
       <BooksListComponent />
 
@@ -144,5 +161,30 @@ export const BooksListComponent: React.FC = () => {
         </BookItem>
       ))}
     </BooksList>
+  );
+};
+
+export const AccountComponent: React.FC<IAccountComponentProps> = ({
+  setShow,
+  user,
+}) => {
+  const navigate = useNavigate();
+  return (
+    <Account>
+      <Bar>
+        <Cross onClick={() => setShow(false)}>
+          <ClearOutlined />
+        </Cross>
+        <T2>Account</T2>
+        <Exit onClick={() => navigate("/login")}>
+          <ExitToApp />
+        </Exit>
+      </Bar>
+      <InnerPartAccount>
+        <ST3>
+          Hi, {user.name}!<br /> Your email: {user.email}
+        </ST3>
+      </InnerPartAccount>
+    </Account>
   );
 };
