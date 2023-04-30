@@ -128,7 +128,7 @@ export const ConfirmButton = styled.button`
   width: 70%;
   height: 45px;
 
-  margin: 20px 0 0 15%;
+  margin-top: 50px;
   background-color: ${Color.Black};
 
   display: flex;
@@ -144,7 +144,7 @@ export const TextButton = styled(T2)`
 
 export const CardFrame = styled.div`
   width: 80%;
-  height: 50%;
+  height: 45vh;
 
   margin-top: 50px;
   border: 1px solid ${Color.Black};

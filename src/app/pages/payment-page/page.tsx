@@ -31,6 +31,11 @@ import { useNavigate } from "react-router-dom";
 
 export const PaymentPage: React.FC = () => {
   const navigate = useNavigate();
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    navigate("/thanks");
+  }
+
   return (
     <Wrapper>
       <NavBar />
@@ -38,7 +43,12 @@ export const PaymentPage: React.FC = () => {
         <LeftPart>
           <LeftHeader>Payment</LeftHeader>
           <S1>All transactions are secure and encrypted</S1>
-          <PaymentCardComponent />
+          <form onSubmit={handleSubmit}>
+            <PaymentCardComponent />
+            <ConfirmButton type="submit">
+              <TextButton>CONFIRM DELIVERY</TextButton>
+            </ConfirmButton>
+          </form>
         </LeftPart>
 
         <RightPart>
@@ -55,9 +65,6 @@ export const PaymentPage: React.FC = () => {
             ))}
           </BooksList>
           <RightPartPriceComponent />
-          <ConfirmButton onClick={() => navigate("/thanks")}>
-            <TextButton>CONFIRM DELIVERY</TextButton>
-          </ConfirmButton>
         </RightPart>
       </MainContainer>
     </Wrapper>
@@ -94,18 +101,18 @@ const PaymentCardComponent: React.FC = () => {
 
       <LongInputContainer>
         <InputHeader>Card Number</InputHeader>
-        <LongInputField />
+        <LongInputField type="text" pattern="[0-9]{16}" required />
       </LongInputContainer>
 
       <ShortInputsContainer>
         <div>
           <InputHeader>Date</InputHeader>
-          <ShortInputField />
+          <ShortInputField type="text" required />
         </div>
 
         <div>
           <InputHeader>CVV</InputHeader>
-          <ShortInputField />
+          <ShortInputField type="text" pattern="[0-9]{3}" required />
         </div>
       </ShortInputsContainer>
     </CardFrame>

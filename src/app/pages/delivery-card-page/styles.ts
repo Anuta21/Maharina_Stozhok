@@ -106,7 +106,7 @@ export const OrderButton = styled.button`
   width: 70%;
   height: 45px;
 
-  margin: 20px 0 0 15%;
+  margin-top: 20px;
   background-color: ${Color.Black};
 
   display: flex;

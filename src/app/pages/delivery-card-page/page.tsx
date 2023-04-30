@@ -24,15 +24,24 @@ import {
 
 export const DeliveryCardPage: React.FC = () => {
   const navigate = useNavigate();
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    navigate("/payment");
+  }
   return (
     <Wrapper>
       <NavBar />
       <MainContainer>
         <LeftPart>
           <LeftHeader>Delivery Information</LeftHeader>
-          <DeliveryForm />
-          <T2>Free delivery from 1000 UAH purchase.</T2>
-          <T2>Free book available for all order over 2000 UAH.</T2>
+          <form onSubmit={handleSubmit}>
+            <DeliveryForm />
+            <T2>Free delivery from 1000 UAH purchase.</T2>
+            <T2>Free book available for all order over 2000 UAH.</T2>
+            <OrderButton type="submit">
+              <TextButton>ORDER</TextButton>
+            </OrderButton>
+          </form>
         </LeftPart>
 
         <RightPart>
@@ -49,9 +58,6 @@ export const DeliveryCardPage: React.FC = () => {
             ))}
           </BooksList>
           <RightPartPriceComponent />
-          <OrderButton onClick={() => navigate("/payment")}>
-            <TextButton>ORDER</TextButton>
-          </OrderButton>
         </RightPart>
       </MainContainer>
     </Wrapper>
@@ -60,22 +66,22 @@ export const DeliveryCardPage: React.FC = () => {
 
 export const DeliveryForm: React.FC = () => {
   return (
-    <form>
+    <>
       <InputHeader>Name</InputHeader>
-      <InputField></InputField>
+      <InputField type="text" required />
 
       <InputHeader>Surame</InputHeader>
-      <InputField></InputField>
+      <InputField type="text" required />
 
       <InputHeader>City</InputHeader>
-      <InputField></InputField>
+      <InputField type="text" required />
 
       <InputHeader>Street and number</InputHeader>
-      <InputField></InputField>
+      <InputField type="text" required />
 
       <InputHeader>Phone</InputHeader>
-      <InputField></InputField>
-    </form>
+      <InputField type="text" required />
+    </>
   );
 };
 

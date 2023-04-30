@@ -28,6 +28,7 @@ import {
   PublishButtonText,
   AuthorName,
   AddButtonText,
+  Form,
 } from "./styles";
 
 export const BookPage: React.FC<IBookPage> = ({
@@ -76,6 +77,7 @@ export const BookPage: React.FC<IBookPage> = ({
             </BottomContainer>
           </InfoWrapper>
         </BookCard>
+
         <ShareOpinion />
         <CommentsContainer>
           {comments.map((comment, id) => (
@@ -89,6 +91,9 @@ export const BookPage: React.FC<IBookPage> = ({
 };
 
 export const ShareOpinion: React.FC = () => {
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+  }
   return (
     <ShareOpinionWrapper>
       <Title>Our customers share their opinion</Title>
@@ -104,10 +109,13 @@ export const ShareOpinion: React.FC = () => {
           }}
         />
       </RatingWrapper2>
-      <InputField placeholder="Give feedback" type="text" />
-      <PublishButton>
-        <PublishButtonText>PUBLISH</PublishButtonText>
-      </PublishButton>
+
+      <Form onSubmit={handleSubmit}>
+        <InputField placeholder="Give feedback" type="text" required />
+        <PublishButton type="submit">
+          <PublishButtonText>PUBLISH</PublishButtonText>
+        </PublishButton>
+      </Form>
     </ShareOpinionWrapper>
   );
 };
