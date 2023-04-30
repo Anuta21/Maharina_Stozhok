@@ -97,6 +97,7 @@ export const BasketComponent: React.FC<IShowComponentProps> = ({
   show,
   setShow,
 }) => {
+  const navigate = useNavigate();
   return (
     <Basket show={show} setShow={setShow}>
       <Bar>
@@ -121,7 +122,7 @@ export const BasketComponent: React.FC<IShowComponentProps> = ({
       </BooksList>
 
       <ButtonContainer>
-        <BuyButton>
+        <BuyButton onClick={() => navigate("/delivery")}>
           <BuyButtonText>BUY</BuyButtonText>
         </BuyButton>
       </ButtonContainer>

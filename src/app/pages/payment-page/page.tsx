@@ -55,7 +55,7 @@ export const PaymentPage: React.FC = () => {
             ))}
           </BooksList>
           <RightPartPriceComponent />
-          <ConfirmButton onClick={() => navigate("")}>
+          <ConfirmButton onClick={() => navigate("/thanks")}>
             <TextButton>CONFIRM DELIVERY</TextButton>
           </ConfirmButton>
         </RightPart>
