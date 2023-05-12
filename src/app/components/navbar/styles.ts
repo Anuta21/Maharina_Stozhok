@@ -12,6 +12,10 @@ export const NavigationWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 480px) {
+    visibility: hidden;
+  }
 `;
 
 export const CenterItems = styled.div`
@@ -40,8 +44,14 @@ export const NavigationItem = styled(S1)`
 `;
 
 export const BookIcon = styled.img`
-  padding-left: 53px;
-  margin-left: 8%;
+  margin-left: 15%;
+
+  @media (max-width: 768px) {
+    margin-left: 5%;
+  }
+  @media (max-width: 480px) {
+    visibility: visible;
+  }
 
   cursor: pointer;
 `;
@@ -52,8 +62,11 @@ export const RightNavigationPart = styled.div`
   justify-content: center;
   align-items: center;
 
-  padding-right: 53px;
-  margin-right: 8%;
+  margin-right: 15%;
+
+  @media (max-width: 768px) {
+    margin-right: 3%;
+  }
 `;
 
 export const UserIcon = styled.img<IShowComponentProps>`
@@ -65,6 +78,46 @@ export const UserIcon = styled.img<IShowComponentProps>`
 
 export const BasketIcon = styled.img`
   cursor: pointer;
+`;
+
+// Burger menu Component Style
+
+export const BurgerIcon = styled.img`
+  position: absolute;
+  top: 3%;
+  right: 5px;
+
+  visibility: hidden;
+
+  @media (max-width: 480px) {
+    visibility: visible;
+    margin-right: 3%;
+  }
+`;
+
+export const BurgerMenu = styled.div`
+  position: absolute;
+  text-align: center;
+
+  width: 100%;
+  height: 50vh;
+  border-bottom: 1px solid ${Color.Black};
+  background-color: ${Color.Sandy};
+  z-index: 2;
+
+  visibility: hidden;
+
+  @media (max-width: 480px) {
+    visibility: visible;
+  }
+`;
+
+export const BurgerMenuContent = styled.ul`
+  padding: 0;
+`;
+
+export const BurgerMenuItem = styled.li`
+  margin-bottom: 30px;
 `;
 
 // Basket Component Style
@@ -81,6 +134,10 @@ export const Basket = styled.div<IShowComponentProps>`
   border-left: 1px solid ${Color.Black};
 
   opacity: ${(props) => (props.show ? "1" : "0")};
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 `;
 
 export const Bar = styled.div`
@@ -155,6 +212,11 @@ export const Account = styled.div`
   background-color: ${Color.Sandy};
   border-bottom: 1px solid ${Color.Black};
   border-left: 1px solid ${Color.Black};
+
+  @media (max-width: 480px) {
+    width: 100%;
+    height: 35%;
+  }
 `;
 
 export const InnerPartAccount = styled.div`

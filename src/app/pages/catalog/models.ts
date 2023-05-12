@@ -19,3 +19,7 @@ export interface IFilterPriceProps {
   from: string;
   to: string;
 }
+
+export interface IFilterProps {
+  isMobile?: boolean;
+}

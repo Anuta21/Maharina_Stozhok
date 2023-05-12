@@ -25,15 +25,24 @@ import {
   PriceFilterItem,
   List,
   ListItem,
+  MobileFilterHeader,
+  MobileFilterWrapper,
+  OrdinaryFilterWrapper,
 } from "./styles";
 import { booksData, sortItems, genres, authors } from "./constants";
-import { IBookData, IFilterItemsShow, IFilterPriceProps } from "./models";
+import {
+  IBookData,
+  IFilterItemsShow,
+  IFilterPriceProps,
+  IFilterProps,
+} from "./models";
 
 export const CatalogPage: React.FC = () => {
   const navigate = useNavigate();
   const [, setParams] = useSearchParams();
 
   const [page, setPage] = useState(0);
+  const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -49,9 +58,21 @@ export const CatalogPage: React.FC = () => {
   return (
     <>
       <NavBar />
+      <MobileFilterHeader
+        onClick={() => setShowMobileFilter(!showMobileFilter)}
+      >
+        FILTER
+      </MobileFilterHeader>
+      {showMobileFilter && (
+        <MobileFilterWrapper>
+          <FilterComp isMobile={true} />
+        </MobileFilterWrapper>
+      )}
       <Wrapper>
         <ContentWrapper>
-          <FilterComp />
+          <OrdinaryFilterWrapper>
+            <FilterComp />
+          </OrdinaryFilterWrapper>
           <RightPart>
             <SearchInputField placeholder="Search" maxLength={100} />
             <BooksSetWrapper>
@@ -98,7 +119,7 @@ const BookCard: React.FC<IBookData> = ({
   );
 };
 
-const FilterComp: React.FC = () => {
+const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
   const [priceProps, setPriceProps] = useState<IFilterPriceProps>({
     from: "",
     to: "",
@@ -122,11 +143,13 @@ const FilterComp: React.FC = () => {
 
   return (
     <FilterWrapper>
-      <FilterHeader>
-        <ST2> REFINE THE SELECTION</ST2>
-      </FilterHeader>
+      {!isMobile && (
+        <FilterHeader>
+          <ST2> REFINE THE SELECTION</ST2>
+        </FilterHeader>
+      )}
 
-      <FilterItem>
+      <FilterItem isMobile={isMobile}>
         <FilterShowedItem>
           <ST1>SORT</ST1>
           <PlusMinusButton
@@ -148,7 +171,7 @@ const FilterComp: React.FC = () => {
         )}
       </FilterItem>
 
-      <FilterItem>
+      <FilterItem isMobile={isMobile}>
         <FilterShowedItem>
           <ST1>AUTHOR</ST1>
           <PlusMinusButton
@@ -170,7 +193,7 @@ const FilterComp: React.FC = () => {
         )}
       </FilterItem>
 
-      <FilterItem>
+      <FilterItem isMobile={isMobile}>
         <FilterShowedItem>
           <ST1>GENRE</ST1>
           <PlusMinusButton
@@ -192,7 +215,7 @@ const FilterComp: React.FC = () => {
         )}
       </FilterItem>
 
-      <PriceFilterItem>
+      <PriceFilterItem isMobile={isMobile}>
         <ST1 style={{ left: "0px" }}>PRICE</ST1>
         <PriceWrapper>
           <PriceInputFieldWrapper>

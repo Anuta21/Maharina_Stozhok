@@ -8,6 +8,8 @@ import eyeOpen from "./eye-open.svg";
 import eyeClosed from "./eye-closed.svg";
 import arrow from "./arrow.svg";
 import thanks from "./thanks.svg";
+import burger from "./burger.svg";
+import cross from "./cross.svg";
 
 export const Images = {
   landingBook,
@@ -20,4 +22,6 @@ export const Images = {
   eyeClosed,
   arrow,
   thanks,
+  burger,
+  cross,
 };

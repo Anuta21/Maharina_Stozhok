@@ -16,3 +16,9 @@ export interface IAccountComponentProps {
   user: IUser;
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export interface IBurgerProps {
+  navBarClick: (item: string) => void;
+  accountClick: () => void;
+  basketClick: () => void;
+}

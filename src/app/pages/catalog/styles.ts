@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Color, Images, S2, ST4 } from "../../common/assets";
-import { IButtonProps } from "./models";
+import { IButtonProps, IFilterProps } from "./models";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -10,7 +10,12 @@ export const Wrapper = styled.div`
 export const ContentWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  margin-top: 40px;
+  margin: 40px 20px 0px 20px;
+
+  @media (max-width: 1024px) {
+    margin: 40px 0 0 0;
+    justify-content: space-evenly;
+  }
 `;
 
 export const RightPart = styled.div`
@@ -21,9 +26,18 @@ export const RightPart = styled.div`
 export const BooksSetWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-column-gap: 100px;
+  grid-column-gap: 60px;
   grid-row-gap: 30px;
   justify-items: center;
+
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 30px;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 export const BookCardWrapper = styled.div`
@@ -79,6 +93,45 @@ export const PaginationWrapper = styled.div`
   padding: 30px 0px;
   display: flex;
   justify-content: flex-end;
+
+  @media (max-width: 480px) {
+    justify-content: center;
+  }
+`;
+
+export const MobileFilterHeader = styled.div`
+  display: none;
+  @media (max-width: 480px) {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 50px;
+    border-top: 1px solid ${Color.Black};
+    border-bottom: 1px solid ${Color.Black};
+    margin-bottom: 20px;
+  }
+`;
+
+export const MobileFilterWrapper = styled.div`
+  position: absolute;
+  top: 122px;
+
+  visibility: hidden;
+
+  @media (max-width: 480px) {
+    visibility: visible;
+  }
+`;
+
+export const OrdinaryFilterWrapper = styled.div`
+  visibility: visible;
+
+  @media (max-width: 480px) {
+    display: none;
+  }
 `;
 
 export const FilterWrapper = styled.div`
@@ -87,6 +140,12 @@ export const FilterWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 480px) {
+    background-color: ${Color.Sandy};
+    border-bottom: 1px solid ${Color.Black};
+    width: 100vw;
+  }
 `;
 
 export const FilterHeader = styled.div`
@@ -95,10 +154,18 @@ export const FilterHeader = styled.div`
   width: 100%;
 `;
 
-export const FilterItem = styled.div`
+export const FilterItem = styled.div<IFilterProps>`
   border-bottom: 1px solid ${Color.Black};
   padding: 22px 0;
   width: 100%;
+  ${(props) =>
+    props.isMobile &&
+    css`
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    `}
 `;
 
 export const FilterShowedItem = styled.div`
@@ -118,7 +185,7 @@ export const Button = styled.button<IButtonProps>`
 `;
 
 export const PlusMinusButton = styled(S2)`
-  margin-right: 10px;
+  margin: 0 10px;
 
   cursor: pointer;
 `;
@@ -173,9 +240,14 @@ export const PriceWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-export const PriceFilterItem = styled.div`
+export const PriceFilterItem = styled.div<IFilterProps>`
   width: 100%;
   margin: 22px 0;
+  ${(props) =>
+    props.isMobile &&
+    css`
+      text-align: center;
+    `}
 `;
 
 export const List = styled.ul`

@@ -26,6 +26,10 @@ import {
   Account,
   InnerPartAccount,
   Exit,
+  BurgerIcon,
+  BurgerMenu,
+  BurgerMenuItem,
+  BurgerMenuContent,
 } from "./styles";
 import {
   ShoppingBagOutlined,
@@ -33,11 +37,16 @@ import {
   ExitToApp,
 } from "@mui/icons-material";
 import { useState } from "react";
-import { IShowComponentProps, IAccountComponentProps } from "./models";
+import {
+  IShowComponentProps,
+  IAccountComponentProps,
+  IBurgerProps,
+} from "./models";
 
 export const NavBar: React.FC = () => {
   const [showBasket, setShowBasket] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
+  const [showBurgerMenu, setShowBurgerMenu] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,6 +62,16 @@ export const NavBar: React.FC = () => {
         navigate("/contact");
         break;
     }
+  };
+
+  const accountClick = () => {
+    setShowBurgerMenu(false);
+    setShowAccount(true);
+  };
+
+  const basketClick = () => {
+    setShowBurgerMenu(false);
+    setShowBasket(true);
   };
 
   return (
@@ -89,6 +108,18 @@ export const NavBar: React.FC = () => {
           />
         </RightNavigationPart>
       </NavigationWrapper>
+      <BurgerIcon
+        onClick={() => setShowBurgerMenu(!showBurgerMenu)}
+        src={showBurgerMenu ? Images.cross : Images.burger}
+        alt="burger"
+      />
+      {showBurgerMenu && (
+        <Burger
+          accountClick={accountClick}
+          basketClick={basketClick}
+          navBarClick={navBarClick}
+        />
+      )}
     </Wrapper>
   );
 };
@@ -152,5 +183,25 @@ export const AccountComponent: React.FC<IAccountComponentProps> = ({
         </ST3>
       </InnerPartAccount>
     </Account>
+  );
+};
+
+export const Burger: React.FC<IBurgerProps> = ({
+  accountClick,
+  basketClick,
+  navBarClick,
+}) => {
+  return (
+    <BurgerMenu>
+      <BurgerMenuContent style={{ listStyleType: "none" }}>
+        {navigationTitles.map((item, index) => (
+          <BurgerMenuItem onClick={() => navBarClick(item)} key={index}>
+            {item}
+          </BurgerMenuItem>
+        ))}
+        <BurgerMenuItem onClick={accountClick}>ACCOUNT</BurgerMenuItem>
+        <BurgerMenuItem onClick={basketClick}>BASKET</BurgerMenuItem>
+      </BurgerMenuContent>
+    </BurgerMenu>
   );
 };
