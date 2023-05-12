@@ -204,7 +204,7 @@ export const Cross = styled.button`
 
 export const Account = styled.div`
   position: absolute;
-  width: 20%;
+  width: 25%;
   height: 25%;
   right: 0;
   z-index: 2;
@@ -212,6 +212,10 @@ export const Account = styled.div`
   background-color: ${Color.Sandy};
   border-bottom: 1px solid ${Color.Black};
   border-left: 1px solid ${Color.Black};
+
+  @media (max-width: 768px) {
+    width: 32%;
+  }
 
   @media (max-width: 480px) {
     width: 100%;
