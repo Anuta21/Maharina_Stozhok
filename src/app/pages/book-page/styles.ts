@@ -11,29 +11,53 @@ import {
 } from "../../common/assets/style";
 
 export const Wrapper = styled.div`
+  position: relative;
   margin-top: 100px;
+
+  @media (max-width: 768px) {
+    margin-top: 40px;
+  }
 `;
 
 export const BookCard = styled.div`
+  position: relative;
   width: 100%;
   margin-bottom: 150px;
 
-  display: inline-grid;
-  grid-template-columns: [start] 10% [left-border] 35% [center] 50% [right-border] 5% [end];
+  display: flex;
+  justify-content: space-evenly;
+
+  @media (max-width: 768px) {
+    height: 90vh;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 90px;
+  }
 `;
 
 export const ImageWrapper = styled.img`
-  grid-column-start: 2;
-  grid-column-end: 3;
+  width: 400px;
+  height: 500px;
 
-  max-width: 400px;
-  max-height: 500px;
+  @media (max-width: 1024px) {
+    width: 350px;
+    height: 440px;
+  }
+
+  @media (max-width: 768px) {
+    width: 300px;
+    height: 375px;
+  }
 `;
 
 export const InfoWrapper = styled.div`
-  position: relative;
-  grid-column-start: 3;
-  grid-column-end: 4;
+  width: 40%;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    width: 90%;
+    height: 200%;
+  }
 `;
 
 export const BookTitle = styled(T3)`
@@ -57,13 +81,17 @@ export const Price = styled(T2)`
 `;
 
 export const AddButton = styled.button`
-  width: 100%;
+  width: 45%;
   height: 50px;
 
   color: ${Color.White};
   background-color: ${Color.Black};
 
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const AddButtonText = styled(ST3)`
@@ -73,7 +101,11 @@ export const AddButtonText = styled(ST3)`
 export const BottomContainer = styled.div`
   width: 80%;
   position: absolute;
-  bottom: 0px;
+  bottom: 0;
+
+  @media (max-width: 768px) {
+    width: 300px;
+  }
 `;
 
 export const ShareOpinionWrapper = styled.div`
@@ -81,6 +113,7 @@ export const ShareOpinionWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   margin-bottom: 150px;
+  text-align: center;
 `;
 
 export const Title = styled(S2)`
@@ -122,7 +155,7 @@ export const CommentWrapper = styled.div`
 `;
 
 export const CommentsContainer = styled.div`
-  margin-left: 150px;
+  margin: auto;
   width: 80%;
 `;
 

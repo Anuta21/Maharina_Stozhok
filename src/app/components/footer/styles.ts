@@ -5,13 +5,17 @@ import { IListProps } from "./models";
 export const FooterWrapper = styled.div`
   top: 30px;
   width: 100%;
-  height: 300px;
+  height: 40vh;
 
   border-top: 1px solid ${Color.Black};
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    height: 75vh;
+  }
 `;
 
 export const TopFooterWrapper = styled.div`
