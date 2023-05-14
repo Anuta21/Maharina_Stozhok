@@ -11,6 +11,7 @@ export const CenterContainer = styled.div`
   position: absolute;
   left: 50%;
   top: 50%;
+  width: 80%;
   transform: translate(-50%, -50%);
   text-align: center;
 
@@ -22,6 +23,14 @@ export const CenterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    font-size: 50px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 35px;
+  }
 `;
 
 export const Arrow = styled.img`

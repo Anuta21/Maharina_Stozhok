@@ -22,6 +22,10 @@ export const CenterContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media (max-width: 768px) {
+    font-size: 200px;
+  }
 `;
 
 export const Arrow = styled.img`

@@ -17,6 +17,16 @@ export const CenterContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media (max-width: 480px) {
+    width: 90%;
+  }
+`;
+
+export const Form = styled.form`
+  @media (max-width: 480px) {
+    width: 80%;
+  }
 `;
 
 export const InputField = styled.input`
@@ -40,6 +50,10 @@ export const InputField = styled.input`
     font-size: 16px;
     color: ${Color.Highlight};
     opacity: 1;
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
   }
 `;
 

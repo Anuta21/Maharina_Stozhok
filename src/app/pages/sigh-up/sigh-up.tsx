@@ -11,6 +11,7 @@ import {
   Button,
   SighUpButton,
   Eye,
+  Form,
 } from "./styles";
 
 export const SighUpPage: React.FC = () => {
@@ -27,7 +28,7 @@ export const SighUpPage: React.FC = () => {
       <NavBar />
       <CenterContainer>
         <Header>Sigh Up</Header>
-        <form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
           <InputFieldWrapper>
             <S1>Email</S1>
             <InputField placeholder="example@gmail.com" type="email" required />
@@ -55,7 +56,7 @@ export const SighUpPage: React.FC = () => {
           <Button type="submit">
             <S1 style={{ color: Color.White }}>Sigh Up</S1>
           </Button>
-        </form>
+        </Form>
         <S1>
           Already have an account?
           <SighUpButton onClick={() => navigate("/login")}>
