@@ -10,6 +10,7 @@ import {
   DeleteButton,
   CountButton,
   PlusMinus,
+  PriceWithNum,
 } from "./styles";
 
 export const BookItemComponent: React.FC<IBookItemProps> = ({
@@ -25,7 +26,7 @@ export const BookItemComponent: React.FC<IBookItemProps> = ({
 
       <BookInfo>
         <Name>{name}</Name>
-        <ShortInfo>{`${info.slice(0, 100)}...`}</ShortInfo>
+        <ShortInfo>{`${info.slice(0, 80)}...`}</ShortInfo>
 
         <BookInteractButtons>
           <CountButton>
@@ -46,7 +47,7 @@ export const BookItemComponent: React.FC<IBookItemProps> = ({
         </BookInteractButtons>
       </BookInfo>
 
-      <ST2>{`${number} X  ${price} грн`}</ST2>
+      <PriceWithNum>{`${number} X  ${price} грн`}</PriceWithNum>
     </BookItem>
   );
 };

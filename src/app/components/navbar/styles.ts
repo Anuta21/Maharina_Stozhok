@@ -135,8 +135,19 @@ export const Basket = styled.div<IShowComponentProps>`
 
   opacity: ${(props) => (props.show ? "1" : "0")};
 
-  @media (max-width: 480px) {
+  @media (max-width: 768px) {
     width: 100%;
+    height: 80%;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 70%;
+    height: 80%;
+  }
+
+  @media (min-width: 1025px) and (max-width: 1280px) {
+    width: 50%;
+    height: 80%;
   }
 `;
 

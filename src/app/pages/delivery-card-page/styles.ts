@@ -13,6 +13,12 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    height: 200%;
+  }
 `;
 
 // Right Part Style
@@ -20,6 +26,16 @@ export const MainContainer = styled.div`
 export const RightPart = styled.div`
   width: 45%;
   height: 100%;
+
+  @media (max-width: 768px) {
+    margin-top: 20px;
+    width: 100%;
+    height: 50%;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    width: 60%;
+  }
 `;
 
 export const BooksList = styled.div<IBooksList>`
@@ -48,6 +64,14 @@ export const BooksList = styled.div<IBooksList>`
   overflow-y: ${(props) => (props.showScroll ? "scroll" : "hidden")};
   scrollbar-color: ${Color.Black} ${Color.DarkGrey};
   scrollbar-width: thin;
+
+  @media (max-width: 480px) {
+    height: 45%;
+  }
+
+  @media (min-width: 769px) and (max-width: 1024px) {
+    height: 55%;
+  }
 `;
 
 export const PriceUnderlinedItem = styled.div`
@@ -82,10 +106,18 @@ export const LeftPart = styled.div`
   width: 50%;
 
   margin-left: 30px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const LeftHeader = styled(T3)`
   margin: 10px 0 30px 0;
+
+  @media (max-width: 480px) {
+    font-size: 30px;
+  }
 `;
 
 export const InputField = styled.input`
@@ -114,6 +146,14 @@ export const OrderButton = styled.button`
   align-items: center;
 
   cursor: pointer;
+
+  @media (max-width: 768px) {
+    width: 85%;
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 export const TextButton = styled(T2)`

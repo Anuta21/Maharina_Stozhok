@@ -13,6 +13,12 @@ export const MainContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: 900px) {
+    flex-direction: column-reverse;
+    justify-content: space-around;
+    height: 200%;
+  }
 `;
 
 // Right Part Style
@@ -20,6 +26,16 @@ export const MainContainer = styled.div`
 export const RightPart = styled.div`
   width: 45%;
   height: 100%;
+
+  @media (max-width: 900px) {
+    margin-top: 20px;
+    width: 100%;
+    height: 50%;
+  }
+
+  @media (min-width: 901px) and (max-width: 1024px) {
+    width: 60%;
+  }
 `;
 
 export const BooksList = styled.div<IBooksList>`
@@ -48,6 +64,18 @@ export const BooksList = styled.div<IBooksList>`
   overflow-y: ${(props) => (props.showScroll ? "scroll" : "hidden")};
   scrollbar-color: ${Color.Black} ${Color.DarkGrey};
   scrollbar-width: thin;
+
+  @media (max-width: 480px) {
+    height: 45%;
+  }
+
+  @media (min-width: 769px) and (max-width: 900px) {
+    margin-left: 15%;
+  }
+
+  @media (min-width: 901px) and (max-width: 1024px) {
+    height: 55%;
+  }
 `;
 
 export const PriceUnderlinedItem = styled.div`
@@ -82,10 +110,18 @@ export const LeftPart = styled.div`
   width: 50%;
 
   margin-left: 30px;
+
+  @media (max-width: 900px) {
+    width: 100%;
+  }
 `;
 
 export const LeftHeader = styled(T3)`
   margin: 30px 0 20px 0;
+
+  @media (max-width: 480px) {
+    font-size: 30px;
+  }
 `;
 
 export const LongInputContainer = styled.div`
@@ -109,6 +145,16 @@ export const ShortInputField = styled.input`
 
   background: ${Color.Sandy};
   font-family: "Playfair Display";
+
+  @media (max-width: 600px) {
+    width: 80%;
+    margin-left: 10%;
+  }
+
+  @media (min-width: 901px) and (max-width: 1024px) {
+    width: 80%;
+    margin-left: 10%;
+  }
 `;
 
 export const ShortInputsContainer = styled.div`
@@ -122,6 +168,13 @@ export const ShortInputsContainer = styled.div`
 
 export const InputHeader = styled(T1)`
   margin-bottom: 10px;
+  @media (max-width: 600px) {
+    margin-left: 10%;
+  }
+
+  @media (min-width: 901px) and (max-width: 1024px) {
+    margin-left: 10%;
+  }
 `;
 
 export const ConfirmButton = styled.button`
@@ -136,6 +189,18 @@ export const ConfirmButton = styled.button`
   align-items: center;
 
   cursor: pointer;
+
+  @media (max-width: 480px) {
+    width: 85%;
+  }
+
+  @media (min-width: 481px) and (max-width: 900px) {
+    width: 90%;
+  }
+
+  @media (min-width: 901px) and (max-width: 768px) {
+    width: 90%;
+  }
 `;
 
 export const TextButton = styled(T2)`
@@ -145,9 +210,20 @@ export const TextButton = styled(T2)`
 export const CardFrame = styled.div`
   width: 80%;
   height: 45vh;
+  min-height: 300px;
 
   margin-top: 50px;
   border: 1px solid ${Color.Black};
+
+  @media (max-width: 600px) {
+    width: 80%;
+    margin-top: 20px;
+  }
+
+  @media (min-width: 901px) and (max-width: 1024px) {
+    width: 80%;
+    margin-top: 20px;
+  }
 `;
 
 export const CardImagesContainer = styled.div`
