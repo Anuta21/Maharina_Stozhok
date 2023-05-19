@@ -73,6 +73,16 @@ export const SearchInputField = styled.input`
   padding-left: 40px;
   background: url(${Images.search}) no-repeat scroll 7px 6px;
 
+  width: 736px;
+
+  @media (max-width: 1024px) {
+    width: 426px;
+  }
+
+  @media (max-width: 768px) {
+    width: 222px;
+  }
+
   :active,
   :focus,
   :hover {
