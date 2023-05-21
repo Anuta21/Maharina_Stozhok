@@ -42,6 +42,8 @@ export const CatalogPage: React.FC = () => {
   const [, setParams] = useSearchParams();
 
   const [page, setPage] = useState(0);
+  const [searchValue, setSearchValue] = useState("");
+  const [books, setBooks] = useState(booksData);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
 
   const handlePageChange = (
@@ -55,6 +57,19 @@ export const CatalogPage: React.FC = () => {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [page]);
+
+  useEffect(() => {
+    if (searchValue.length >= 3) {
+      const newBooks = booksData.filter((book) =>
+        book.name
+          .toLocaleLowerCase()
+          .includes(searchValue.toLocaleLowerCase().trim())
+      );
+      setBooks(newBooks);
+    } else {
+      setBooks(booksData);
+    }
+  }, [searchValue]);
   return (
     <>
       <NavBar />
@@ -74,9 +89,13 @@ export const CatalogPage: React.FC = () => {
             <FilterComp />
           </OrdinaryFilterWrapper>
           <RightPart>
-            <SearchInputField placeholder="Search" maxLength={100} />
+            <SearchInputField
+              placeholder="Search"
+              maxLength={100}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
             <BooksSetWrapper>
-              {booksData.slice(page * 30, page * 30 + 30).map((book, index) => (
+              {books.slice(page * 30, page * 30 + 30).map((book, index) => (
                 <BookCard
                   key={index}
                   image={book.image}
@@ -89,7 +108,7 @@ export const CatalogPage: React.FC = () => {
             <PaginationWrapper>
               <Pagination
                 page={page + 1}
-                count={Math.ceil(booksData.length / 30)}
+                count={Math.ceil(books.length / 30)}
                 onChange={handlePageChange}
                 shape="rounded"
               />

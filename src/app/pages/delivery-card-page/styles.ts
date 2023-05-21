@@ -3,6 +3,7 @@ import { T1, Color, T2, T3 } from "../../common/assets";
 import { IBooksList } from "./models";
 
 export const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   height: 100vh;
 `;
