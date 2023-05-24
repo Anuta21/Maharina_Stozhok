@@ -14,7 +14,12 @@ export const basketSlice = createSlice({
       state.books[action.payload].number += 1;
     },
     removeBookNum(state, action: PayloadAction<string>) {
-      state.books[action.payload].number -= 1;
+      if (state.books[action.payload].number === 1) {
+        const { [action.payload]: _, ...tempBooks } = state.books;
+        state.books = tempBooks;
+      } else {
+        state.books[action.payload].number -= 1;
+      }
     },
     deleteBook(state, action: PayloadAction<string>) {
       const { [action.payload]: _, ...tempBooks } = state.books;

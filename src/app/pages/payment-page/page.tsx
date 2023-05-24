@@ -1,9 +1,7 @@
 import { S1 } from "../../common/assets";
 import { BookItemComponent, NavBar } from "../../components";
-import {
-  books,
-  maxBooksCountWithoutScroll,
-} from "../../components/navbar/constants";
+import { useAppSelector } from "../../store";
+import { maxBooksCountWithoutScroll } from "../../components/navbar/constants";
 import {
   RightPart,
   Wrapper,
@@ -30,7 +28,10 @@ import logo from "./images/visa-mastercard-logo.png";
 import { useNavigate } from "react-router-dom";
 
 export const PaymentPage: React.FC = () => {
+  const { books } = useAppSelector((state) => state.persistedReducer.basket);
+
   const navigate = useNavigate();
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     navigate("/thanks");
@@ -52,16 +53,18 @@ export const PaymentPage: React.FC = () => {
         </LeftPart>
 
         <RightPart>
-          <BooksList showScroll={books.length > maxBooksCountWithoutScroll}>
-            {books.map((book, index) => (
+          <BooksList
+            showScroll={Object.keys(books).length > maxBooksCountWithoutScroll}
+          >
+            {Object.keys(books).map((book, index) => (
               <BookItemComponent
                 key={index}
-                id={"id"}
-                picture={book.picture}
-                name={book.name}
-                info={book.info}
-                price={book.price}
-                number={book.number}
+                id={book}
+                picture={books[book].link}
+                name={books[book].name}
+                info={books[book].info}
+                price={books[book].price}
+                number={books[book].number}
               />
             ))}
           </BooksList>
