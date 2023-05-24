@@ -13,3 +13,22 @@ export interface IBook {
   imageUrl: string;
   feedbacks: Array<IFeedback>;
 }
+
+export interface ILoginRequestBody {
+  email: string;
+  password: string;
+}
+
+export interface ILoginAndSighUpResponceBody {
+  _id: string;
+  name: string;
+  email: string;
+  __v: number;
+  token: string;
+}
+
+export interface ISighUpRequestBody {
+  name: string;
+  email: string;
+  password: string;
+}

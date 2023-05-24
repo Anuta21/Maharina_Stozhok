@@ -1,4 +1,5 @@
 export interface IUserState {
+  email: string;
   name: string;
   id: string;
   token: string;

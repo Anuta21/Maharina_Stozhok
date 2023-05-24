@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { S1, Color, T2 } from "../../common/assets";
-import { IShowComponentProps, IBooksList } from "./models";
+import { IShowComponentProps, IBooksList, IExitButtonProps } from "./models";
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -71,7 +71,7 @@ export const RightNavigationPart = styled.div`
 
 export const UserIcon = styled.img<IShowComponentProps>`
   margin-right: 20px;
-  z-index: ${(props) => (props.show ? "-1" : "1")};
+  z-index: ${(props) => (props.show ? "-1" : "2")};
 
   cursor: pointer;
 `;
@@ -127,7 +127,7 @@ export const Basket = styled.div<IShowComponentProps>`
   width: 40%;
   height: 70%;
   right: 0;
-  z-index: ${(props) => (props.show ? "1" : "-1")};
+  z-index: ${(props) => (props.show ? "2" : "-1")};
 
   background-color: ${Color.Sandy};
   border-bottom: 1px solid ${Color.Black};
@@ -240,6 +240,13 @@ export const InnerPartAccount = styled.div`
   top: 45%;
 `;
 
-export const Exit = styled.div`
+export const Exit = styled.div<IExitButtonProps>`
+  cursor: ${(props) => (props.show ? "pointer" : "default")};
+
+  opacity: ${(props) => (props.show ? "1" : "0")};
+`;
+
+export const LoginButton = styled.span`
+  color: ${Color.Highlight};
   cursor: pointer;
 `;

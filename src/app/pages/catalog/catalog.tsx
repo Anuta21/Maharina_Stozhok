@@ -81,7 +81,6 @@ export const CatalogPage: React.FC = () => {
         const responseData = (await client.books.getBooks()).data;
         setBooks(responseData);
         setBooksToShow(responseData);
-        console.log(responseData);
       } catch (error) {
         console.error(error);
       }

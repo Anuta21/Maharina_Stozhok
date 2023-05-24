@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { IErrorProps } from "./models";
 import { S2, Color } from "../../common/assets";
 
 export const Wrapper = styled.div`
@@ -87,4 +88,17 @@ export const Button = styled.button`
 export const SighUpButton = styled.span`
   color: ${Color.Highlight};
   cursor: pointer;
+`;
+
+export const ErrorText = styled.div<IErrorProps>`
+  margin-bottom: 20px;
+  width: 300px;
+  color: #5e0a18;
+
+  opacity: ${(props) => (props.show ? "1" : "0")};
+  transition: 0.5s opacity ease-in-out;
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
 `;

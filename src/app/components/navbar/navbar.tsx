@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Images, T2, ST3 } from "../../common/assets";
+import { userSlice, useAppSelector, useAppDispatch } from "../../store";
 import { BookItemComponent } from "../book-item-short-info";
 import {
   books,
   maxBooksCountWithoutScroll,
   navigationTitles,
-  user,
 } from "./constants";
 import {
   CenterItems,
@@ -30,6 +30,7 @@ import {
   BurgerMenu,
   BurgerMenuItem,
   BurgerMenuContent,
+  LoginButton,
 } from "./styles";
 import {
   ShoppingBagOutlined,
@@ -76,7 +77,7 @@ export const NavBar: React.FC = () => {
 
   return (
     <Wrapper>
-      {showAccount && <AccountComponent user={user} setShow={setShowAccount} />}
+      {showAccount && <AccountComponent setShow={setShowAccount} />}
       <BasketComponent
         show={showBasket}
         setShow={setShowBasket}
@@ -163,8 +164,13 @@ export const BasketComponent: React.FC<IShowComponentProps> = ({
 
 export const AccountComponent: React.FC<IAccountComponentProps> = ({
   setShow,
-  user,
 }) => {
+  const { name, email, token } = useAppSelector(
+    (state) => state.persistedReducer.user
+  );
+  const { setUser } = userSlice.actions;
+  const dispatch = useAppDispatch();
+
   const navigate = useNavigate();
   return (
     <Account>
@@ -173,14 +179,33 @@ export const AccountComponent: React.FC<IAccountComponentProps> = ({
           <ClearOutlined />
         </Cross>
         <T2>Account</T2>
-        <Exit onClick={() => navigate("/login")}>
+
+        <Exit
+          show={token.length > 0}
+          onClick={() => {
+            if (token.length > 0) {
+              dispatch(setUser({ id: "", name: "", email: "", token: "" }));
+              navigate("/login");
+            }
+          }}
+        >
           <ExitToApp />
         </Exit>
       </Bar>
       <InnerPartAccount>
-        <ST3>
-          Hi, {user.name}!<br /> Your email: {user.email}
-        </ST3>
+        {token ? (
+          <ST3>
+            Hi, {name}!<br /> Your email: {email}
+          </ST3>
+        ) : (
+          <ST3>
+            Please
+            <LoginButton onClick={() => navigate("/login")}>
+              &nbsp;Login
+            </LoginButton>
+            .
+          </ST3>
+        )}
       </InnerPartAccount>
     </Account>
   );

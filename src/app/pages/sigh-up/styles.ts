@@ -88,3 +88,12 @@ export const SighUpButton = styled.span`
   color: ${Color.Highlight};
   cursor: pointer;
 `;
+
+export const PasswordText = styled.div`
+  margin-bottom: 20px;
+  width: 300px;
+
+  @media (max-width: 480px) {
+    width: 100%;
+  }
+`;

@@ -1,5 +1,4 @@
 import { IBookItemProps } from "../book-item-short-info/models";
-import { IUser } from "./models";
 
 export const navigationTitles = ["CATALOG", "ABOUT US", "CONTACTS"];
 
@@ -39,5 +38,3 @@ export const books: Array<IBookItemProps> = [
 ];
 
 export const maxBooksCountWithoutScroll = 3;
-
-export const user: IUser = { name: "Tom", email: "tom@gmail.com" };
