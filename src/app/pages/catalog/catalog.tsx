@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import { NavBar, Footer, CheckMark } from "../../components";
 import { ST1, ST2, ST4, Color } from "../../common/assets";
+import { Client, IBook } from "../../services";
 import {
   Wrapper,
   BookCardWrapper,
@@ -29,7 +30,7 @@ import {
   MobileFilterWrapper,
   OrdinaryFilterWrapper,
 } from "./styles";
-import { booksData, sortItems, genres, authors } from "./constants";
+import { sortItems, genres, authors } from "./constants";
 import {
   IBookData,
   IFilterItemsShow,
@@ -43,8 +44,11 @@ export const CatalogPage: React.FC = () => {
 
   const [page, setPage] = useState(0);
   const [searchValue, setSearchValue] = useState("");
-  const [books, setBooks] = useState(booksData);
+  const [books, setBooks] = useState<Array<IBook>>([]);
+  const [booksToShow, setBooksToShow] = useState<Array<IBook>>([]);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+
+  const client = new Client();
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
@@ -60,16 +64,32 @@ export const CatalogPage: React.FC = () => {
 
   useEffect(() => {
     if (searchValue.length >= 3) {
-      const newBooks = booksData.filter((book) =>
-        book.name
+      const newBooks = books.filter((book) =>
+        book.title
           .toLocaleLowerCase()
           .includes(searchValue.toLocaleLowerCase().trim())
       );
-      setBooks(newBooks);
+      setBooksToShow(newBooks);
     } else {
-      setBooks(booksData);
+      setBooksToShow(books);
     }
   }, [searchValue]);
+
+  useEffect(() => {
+    async function getBooks() {
+      try {
+        const responseData = (await client.books.getBooks()).data;
+        setBooks(responseData);
+        setBooksToShow(responseData);
+        console.log(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getBooks();
+  }, []);
+
   return (
     <>
       <NavBar />
@@ -95,20 +115,22 @@ export const CatalogPage: React.FC = () => {
               onChange={(e) => setSearchValue(e.target.value)}
             />
             <BooksSetWrapper>
-              {books.slice(page * 30, page * 30 + 30).map((book, index) => (
-                <BookCard
-                  key={index}
-                  image={book.image}
-                  name={book.name}
-                  price={book.price}
-                  handleCardClick={() => navigate(`/book/${index}`)}
-                />
-              ))}
+              {booksToShow
+                .slice(page * 30, page * 30 + 30)
+                .map((book, index) => (
+                  <BookCard
+                    key={index}
+                    image={book.imageUrl}
+                    name={book.title}
+                    price={book.price}
+                    handleCardClick={() => navigate(`/book/${index}`)}
+                  />
+                ))}
             </BooksSetWrapper>
             <PaginationWrapper>
               <Pagination
                 page={page + 1}
-                count={Math.ceil(books.length / 30)}
+                count={Math.ceil(booksToShow.length / 30)}
                 onChange={handlePageChange}
                 shape="rounded"
               />

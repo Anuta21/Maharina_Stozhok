@@ -1,5 +1,5 @@
 import { IBookItemProps } from "./models";
-import { S2, B1, ST1, ST2 } from "../../common/assets";
+import { S2, B1, ST1 } from "../../common/assets";
 import {
   BookItem,
   BookPic,

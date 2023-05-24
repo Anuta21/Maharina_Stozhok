@@ -48,6 +48,7 @@ export const BookCardWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   justify-content: space-between;
 
   cursor: pointer;
