@@ -4,6 +4,7 @@ export const navigationTitles = ["CATALOG", "ABOUT US", "CONTACTS"];
 
 export const books: Array<IBookItemProps> = [
   {
+    id: "id",
     picture:
       "https://bookchef.ua/upload/iblock/94f/94f629cedebd39d22275d972803efb75.png",
     name: "Name",
@@ -12,6 +13,7 @@ export const books: Array<IBookItemProps> = [
     number: 1,
   },
   {
+    id: "id",
     picture:
       "https://bookchef.ua/upload/iblock/94f/94f629cedebd39d22275d972803efb75.png",
     name: "Name",
@@ -20,6 +22,7 @@ export const books: Array<IBookItemProps> = [
     number: 2,
   },
   {
+    id: "id",
     picture:
       "https://bookchef.ua/upload/iblock/94f/94f629cedebd39d22275d972803efb75.png",
     name: "Name",
@@ -28,6 +31,7 @@ export const books: Array<IBookItemProps> = [
     number: 3,
   },
   {
+    id: "id",
     picture:
       "https://bookchef.ua/upload/iblock/94f/94f629cedebd39d22275d972803efb75.png",
     name: "Name",

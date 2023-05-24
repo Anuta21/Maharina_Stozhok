@@ -10,6 +10,7 @@ export interface IBook {
   info: string;
   price: number;
   number: number;
+  link: string;
 }
 
 export interface IBasketState {

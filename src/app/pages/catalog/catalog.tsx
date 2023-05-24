@@ -122,7 +122,7 @@ export const CatalogPage: React.FC = () => {
                     image={book.imageUrl}
                     name={book.title}
                     price={book.price}
-                    handleCardClick={() => navigate(`/book/${index}`)}
+                    handleCardClick={() => navigate(`/book/${book._id}`)}
                   />
                 ))}
             </BooksSetWrapper>

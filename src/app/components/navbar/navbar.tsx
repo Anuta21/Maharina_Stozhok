@@ -2,11 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Images, T2, ST3 } from "../../common/assets";
 import { userSlice, useAppSelector, useAppDispatch } from "../../store";
 import { BookItemComponent } from "../book-item-short-info";
-import {
-  books,
-  maxBooksCountWithoutScroll,
-  navigationTitles,
-} from "./constants";
+import { maxBooksCountWithoutScroll, navigationTitles } from "./constants";
 import {
   CenterItems,
   NavigationItem,
@@ -130,6 +126,9 @@ export const BasketComponent: React.FC<IShowComponentProps> = ({
   setShow,
 }) => {
   const navigate = useNavigate();
+
+  const { books } = useAppSelector((state) => state.persistedReducer.basket);
+
   return (
     <Basket show={show} setShow={setShow}>
       <Bar>
@@ -140,15 +139,18 @@ export const BasketComponent: React.FC<IShowComponentProps> = ({
         <ShoppingBagOutlined />
       </Bar>
 
-      <BooksList showScroll={books.length > maxBooksCountWithoutScroll}>
-        {books.map((book, index) => (
+      <BooksList
+        showScroll={Object.keys(books).length > maxBooksCountWithoutScroll}
+      >
+        {Object.keys(books).map((book, index) => (
           <BookItemComponent
             key={index}
-            picture={book.picture}
-            name={book.name}
-            info={book.info}
-            price={book.price}
-            number={book.number}
+            id={book}
+            picture={books[book].link}
+            name={books[book].name}
+            info={books[book].info}
+            price={books[book].price}
+            number={books[book].number}
           />
         ))}
       </BooksList>

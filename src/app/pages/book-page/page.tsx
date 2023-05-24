@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { NavBar, Footer } from "../../components";
+import { basketSlice, useAppSelector, useAppDispatch } from "../../store";
 import { BookPageTempProps, comments } from "./constants";
 import { IBookPage, IComment } from "./models";
 import {
@@ -41,6 +42,28 @@ export const BookPage: React.FC<IBookPage> = ({
 }) => {
   const { id } = useParams();
 
+  const { books } = useAppSelector((state) => state.persistedReducer.basket);
+  const { addNewBook, addBookNum } = basketSlice.actions;
+  const dispatch = useAppDispatch();
+
+  const handleOnCartClick = () => {
+    if (id && id in books) {
+      dispatch(addBookNum(id));
+    } else if (id) {
+      dispatch(
+        addNewBook({
+          [id]: {
+            name: bookName,
+            info: info,
+            price: price,
+            number: 1,
+            link: imageUrl,
+          },
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
@@ -71,7 +94,7 @@ export const BookPage: React.FC<IBookPage> = ({
             <Info>{info}</Info>
             <BottomContainer>
               <Price>{`${price} UAH`}</Price>
-              <AddButton>
+              <AddButton onClick={handleOnCartClick}>
                 <AddButtonText>ADD TO CART</AddButtonText>
               </AddButton>
             </BottomContainer>

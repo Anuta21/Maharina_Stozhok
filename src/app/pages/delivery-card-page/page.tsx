@@ -49,6 +49,7 @@ export const DeliveryCardPage: React.FC = () => {
             {books.map((book, index) => (
               <BookItemComponent
                 key={index}
+                id={"id"}
                 picture={book.picture}
                 name={book.name}
                 info={book.info}
