@@ -1,5 +1,5 @@
-interface IFeedback {
-  _id: string;
+export interface IFeedback {
+  _id?: string;
   feedbackText: string;
   estimate: number;
 }
@@ -19,7 +19,7 @@ export interface ILoginRequestBody {
   password: string;
 }
 
-export interface ILoginAndSighUpResponceBody {
+export interface ILoginAndSighUpResponseBody {
   _id: string;
   name: string;
   email: string;

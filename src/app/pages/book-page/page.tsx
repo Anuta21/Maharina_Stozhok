@@ -1,9 +1,8 @@
-import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { NavBar, Footer } from "../../components";
-import { BookPageTempProps, comments } from "./constants";
-import { IBookPage, IComment } from "./models";
+import { IComment } from "./models";
 import {
   AddButton,
   BookCard,
@@ -30,70 +29,116 @@ import {
   AddButtonText,
   Form,
 } from "./styles";
+import { Client, IBook, IFeedback } from "../../services";
+import { useAppSelector } from "../../store";
 
-export const BookPage: React.FC<IBookPage> = ({
-  authorName = BookPageTempProps.authorName,
-  bookName = BookPageTempProps.bookName,
-  price = BookPageTempProps.price,
-  rating = BookPageTempProps.rating,
-  imageUrl = BookPageTempProps.imageUrl,
-  info = BookPageTempProps.info,
-}) => {
+export const BookPage: React.FC = () => {
   const { id } = useParams();
+  const [book, setBook] = useState({} as IBook);
+  const [estimate, setEstimate] = useState(0);
+
+  const client = new Client();
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
   }, []);
+
+  useEffect(() => {
+    async function getBook() {
+      try {
+        const responseData = (await client.books.getBook(id as string)).data;
+        setBook(responseData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    getBook();
+  }, []);
+
+  useEffect(() => {
+    function countEstimate() {
+      const estimates = book.feedbacks.map((feedback) => feedback.estimate);
+      const averageEstimate =
+        estimates.reduce((num1, num2) => num1 + num2, 0) / estimates.length;
+      setEstimate(averageEstimate);
+    }
+
+    if (book.feedbacks && book.feedbacks.length > 0) countEstimate();
+  }, [book]);
+
   return (
     <>
-      <NavBar />
-      <Wrapper>
-        <BookCard>
-          <ImageWrapper src={imageUrl}></ImageWrapper>
-          <InfoWrapper>
-            <BookTitle>
-              {bookName}
-              {id}
-            </BookTitle>
-            <AuthorName>{authorName}</AuthorName>
-            <RatingWrapper>
-              <Rating
-                value={rating}
-                precision={0.5}
-                sx={{
-                  "& .MuiRating-iconFilled": {
-                    color: "black",
-                  },
-                }}
-                readOnly
-              />
-            </RatingWrapper>
-            <Info>{info}</Info>
-            <BottomContainer>
-              <Price>{`${price} UAH`}</Price>
-              <AddButton>
-                <AddButtonText>ADD TO CART</AddButtonText>
-              </AddButton>
-            </BottomContainer>
-          </InfoWrapper>
-        </BookCard>
+      {book.title && (
+        <>
+          <NavBar />
+          <Wrapper>
+            <BookCard>
+              <ImageWrapper src={book.imageUrl}></ImageWrapper>
+              <InfoWrapper>
+                <BookTitle>{book.title}</BookTitle>
+                <AuthorName>{book.author}</AuthorName>
+                <RatingWrapper>
+                  <Rating
+                    value={estimate}
+                    precision={0.5}
+                    sx={{
+                      "& .MuiRating-iconFilled": {
+                        color: "black",
+                      },
+                    }}
+                    readOnly
+                  />
+                </RatingWrapper>
+                <Info>{book.info}</Info>
+                <BottomContainer>
+                  <Price>{`${book.price} UAH`}</Price>
+                  <AddButton>
+                    <AddButtonText>ADD TO CART</AddButtonText>
+                  </AddButton>
+                </BottomContainer>
+              </InfoWrapper>
+            </BookCard>
 
-        <ShareOpinion />
-        <CommentsContainer>
-          {comments.map((comment, id) => (
-            <Comment key={id} points={comment.points} text={comment.text} />
-          ))}
-        </CommentsContainer>
-      </Wrapper>
-      <Footer />
+            <ShareOpinion />
+            <CommentsContainer>
+              {book.feedbacks.map((feedback) => (
+                <Comment
+                  key={feedback._id}
+                  points={feedback.estimate}
+                  text={feedback.feedbackText}
+                />
+              ))}
+            </CommentsContainer>
+          </Wrapper>
+          <Footer />
+        </>
+      )}
     </>
   );
 };
 
 export const ShareOpinion: React.FC = () => {
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  const { id } = useParams();
+  const { token } = useAppSelector((state) => state.persistedReducer.user);
+
+  const navigate = useNavigate();
+  const client = new Client();
+  const [feedback, setFeedback] = useState({ estimate: 0 } as IFeedback);
+
+  function putFeedBack() {
+    try {
+      client.books.putFeedback(feedback, id as string, token);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    if (token === "") navigate("/login");
+    else putFeedBack();
+  }
+
   return (
     <ShareOpinionWrapper>
       <Title>Our customers share their opinion</Title>
@@ -107,11 +152,25 @@ export const ShareOpinion: React.FC = () => {
               color: "black",
             },
           }}
+          value={feedback.estimate}
+          onChange={(event, newValue) => {
+            setFeedback((state) => ({ ...state, estimate: newValue || 0 }));
+          }}
         />
       </RatingWrapper2>
 
       <Form onSubmit={handleSubmit}>
-        <InputField placeholder="Give feedback" type="text" required />
+        <InputField
+          placeholder="Give feedback"
+          type="text"
+          required
+          onChange={(e) => {
+            setFeedback((state) => ({
+              ...state,
+              feedbackText: e.target.value,
+            }));
+          }}
+        />
         <PublishButton type="submit">
           <PublishButtonText>PUBLISH</PublishButtonText>
         </PublishButton>

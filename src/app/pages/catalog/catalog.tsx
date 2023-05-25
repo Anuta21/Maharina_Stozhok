@@ -114,17 +114,15 @@ export const CatalogPage: React.FC = () => {
               onChange={(e) => setSearchValue(e.target.value)}
             />
             <BooksSetWrapper>
-              {booksToShow
-                .slice(page * 30, page * 30 + 30)
-                .map((book, index) => (
-                  <BookCard
-                    key={index}
-                    image={book.imageUrl}
-                    name={book.title}
-                    price={book.price}
-                    handleCardClick={() => navigate(`/book/${index}`)}
-                  />
-                ))}
+              {booksToShow.slice(page * 30, page * 30 + 30).map((book) => (
+                <BookCard
+                  key={book._id}
+                  image={book.imageUrl}
+                  name={book.title}
+                  price={book.price}
+                  handleCardClick={() => navigate(`/book/${book._id}`)}
+                />
+              ))}
             </BooksSetWrapper>
             <PaginationWrapper>
               <Pagination

@@ -1,7 +1,7 @@
 import { RequestBuilder } from "../../common/request-builder";
 import {
   ILoginRequestBody,
-  ILoginAndSighUpResponceBody,
+  ILoginAndSighUpResponseBody,
   ISighUpRequestBody,
 } from "./models";
 
@@ -12,13 +12,13 @@ export class AuthController {
     const path = `${this.searchUrl}/login`;
     return new RequestBuilder()
       .setBody(body)
-      .post<ILoginAndSighUpResponceBody>(path);
+      .post<ILoginAndSighUpResponseBody>(path);
   }
 
   sighUp(body: ISighUpRequestBody) {
     const path = `${this.searchUrl}/register`;
     return new RequestBuilder()
       .setBody(body)
-      .post<ILoginAndSighUpResponceBody>(path);
+      .post<ILoginAndSighUpResponseBody>(path);
   }
 }
