@@ -10,16 +10,20 @@ export const basketSlice = createSlice({
     addNewBook(state, action: PayloadAction<{ [key: string]: IBook }>) {
       state.books = { ...state.books, ...action.payload };
     },
-    addChosenBook(state, action: PayloadAction<string>) {
+    addBookNum(state, action: PayloadAction<string>) {
       state.books[action.payload].number += 1;
     },
-    deleteBook(state, action: PayloadAction<string>) {
-      if (state.books[action.payload].number > 1) {
-        state.books[action.payload].number -= 1;
-      } else {
+    removeBookNum(state, action: PayloadAction<string>) {
+      if (state.books[action.payload].number === 1) {
         const { [action.payload]: _, ...tempBooks } = state.books;
         state.books = tempBooks;
+      } else {
+        state.books[action.payload].number -= 1;
       }
+    },
+    deleteBook(state, action: PayloadAction<string>) {
+      const { [action.payload]: _, ...tempBooks } = state.books;
+      state.books = tempBooks;
     },
   },
 });

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
 import { NavBar, Footer } from "../../components";
+import { basketSlice, useAppSelector, useAppDispatch } from "../../store";
 import { IComment } from "./models";
 import {
   AddButton,
@@ -30,7 +31,6 @@ import {
   Form,
 } from "./styles";
 import { Client, IBook, IFeedback } from "../../services";
-import { useAppSelector } from "../../store";
 
 export const BookPage: React.FC = () => {
   const { id } = useParams();
@@ -38,6 +38,28 @@ export const BookPage: React.FC = () => {
   const [estimate, setEstimate] = useState(0);
 
   const client = new Client();
+
+  const { books } = useAppSelector((state) => state.persistedReducer.basket);
+  const { addNewBook, addBookNum } = basketSlice.actions;
+  const dispatch = useAppDispatch();
+
+  const handleOnCartClick = () => {
+    if (id && id in books) {
+      dispatch(addBookNum(id));
+    } else if (id) {
+      dispatch(
+        addNewBook({
+          [id]: {
+            name: book.title,
+            info: book.info,
+            price: book.price,
+            number: 1,
+            link: book.imageUrl,
+          },
+        })
+      );
+    }
+  };
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -93,7 +115,7 @@ export const BookPage: React.FC = () => {
                 <Info>{book.info}</Info>
                 <BottomContainer>
                   <Price>{`${book.price} UAH`}</Price>
-                  <AddButton>
+                  <AddButton onClick={handleOnCartClick}>
                     <AddButtonText>ADD TO CART</AddButtonText>
                   </AddButton>
                 </BottomContainer>
