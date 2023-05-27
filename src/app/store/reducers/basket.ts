@@ -25,5 +25,8 @@ export const basketSlice = createSlice({
       const { [action.payload]: _, ...tempBooks } = state.books;
       state.books = tempBooks;
     },
+    setEmptyBasket(state) {
+      state.books = {};
+    },
   },
 });

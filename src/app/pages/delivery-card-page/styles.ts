@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { T1, Color, T2, T3 } from "../../common/assets";
-import { IBooksList } from "./models";
+import { IBooksList, IOrderButton } from "./models";
 
 export const Wrapper = styled.div`
   position: relative;
@@ -135,7 +135,7 @@ export const InputHeader = styled(T1)`
   margin-bottom: 10px;
 `;
 
-export const OrderButton = styled.button`
+export const OrderButton = styled.button<IOrderButton>`
   width: 70%;
   height: 45px;
 
@@ -146,7 +146,7 @@ export const OrderButton = styled.button`
   justify-content: center;
   align-items: center;
 
-  cursor: pointer;
+  cursor: ${(props) => (props.active ? "pointer" : "not-allowed")};
 
   @media (max-width: 768px) {
     width: 85%;

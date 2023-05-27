@@ -34,6 +34,7 @@ import { sortItems, genres, authors } from "./constants";
 import {
   IBookData,
   IFilterItemsShow,
+  IFilterOptions,
   IFilterPriceProps,
   IFilterProps,
 } from "./models";
@@ -46,7 +47,15 @@ export const CatalogPage: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [books, setBooks] = useState<Array<IBook>>([]);
   const [booksToShow, setBooksToShow] = useState<Array<IBook>>([]);
+  const [filteredBooks, setFilteredBooks] = useState<Array<IBook>>([]);
   const [showMobileFilter, setShowMobileFilter] = useState(false);
+
+  const [filterOptions, setFilterOptions] = useState({
+    sort: "",
+    author: [],
+    genre: [],
+    price: { from: 0, to: 1000 },
+  } as IFilterOptions);
 
   const client = new Client();
 
@@ -79,8 +88,17 @@ export const CatalogPage: React.FC = () => {
     async function getBooks() {
       try {
         const responseData = (await client.books.getBooks()).data;
+        const prices = responseData.map((book) => book.price);
+        const minPrice = Math.min(...prices);
+        const maxPrice = Math.max(...prices);
+
+        setFilterOptions((state) => ({
+          ...state,
+          price: { from: minPrice, to: maxPrice },
+        }));
         setBooks(responseData);
         setBooksToShow(responseData);
+        setFilteredBooks(responseData);
       } catch (error) {
         console.error(error);
       }
@@ -88,6 +106,8 @@ export const CatalogPage: React.FC = () => {
 
     getBooks();
   }, []);
+
+  useEffect(() => {}, [filterOptions]);
 
   return (
     <>
@@ -99,13 +119,26 @@ export const CatalogPage: React.FC = () => {
       </MobileFilterHeader>
       {showMobileFilter && (
         <MobileFilterWrapper>
-          <FilterComp isMobile={true} />
+          <FilterComp
+            isMobile={true}
+            books={booksToShow}
+            setBooks={setBooks}
+            setFilteredBooks={setFilteredBooks}
+            filterOptions={filterOptions}
+            setFilterOptions={setFilterOptions}
+          />
         </MobileFilterWrapper>
       )}
       <Wrapper>
         <ContentWrapper>
           <OrdinaryFilterWrapper>
-            <FilterComp />
+            <FilterComp
+              books={books}
+              setBooks={setBooks}
+              setFilteredBooks={setFilteredBooks}
+              filterOptions={filterOptions}
+              setFilterOptions={setFilterOptions}
+            />
           </OrdinaryFilterWrapper>
           <RightPart>
             <SearchInputField
@@ -114,20 +147,26 @@ export const CatalogPage: React.FC = () => {
               onChange={(e) => setSearchValue(e.target.value)}
             />
             <BooksSetWrapper>
-              {booksToShow.slice(page * 30, page * 30 + 30).map((book) => (
-                <BookCard
-                  key={book._id}
-                  image={book.imageUrl}
-                  name={book.title}
-                  price={book.price}
-                  handleCardClick={() => navigate(`/book/${book._id}`)}
-                />
-              ))}
+              {books
+                .filter(
+                  (book) =>
+                    booksToShow.includes(book) && filteredBooks.includes(book)
+                )
+                .slice(page * 15, page * 15 + 15)
+                .map((book) => (
+                  <BookCard
+                    key={book._id}
+                    image={book.imageUrl}
+                    name={book.title}
+                    price={book.price}
+                    handleCardClick={() => navigate(`/book/${book._id}`)}
+                  />
+                ))}
             </BooksSetWrapper>
             <PaginationWrapper>
               <Pagination
                 page={page + 1}
-                count={Math.ceil(booksToShow.length / 30)}
+                count={Math.ceil(booksToShow.length / 15)}
                 onChange={handlePageChange}
                 shape="rounded"
               />
@@ -157,27 +196,147 @@ const BookCard: React.FC<IBookData> = ({
   );
 };
 
-const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
-  const [priceProps, setPriceProps] = useState<IFilterPriceProps>({
-    from: "",
-    to: "",
-  });
+const FilterComp: React.FC<IFilterProps> = ({
+  isMobile = false,
+  books,
+  setBooks,
+  setFilteredBooks,
+  filterOptions,
+  setFilterOptions,
+}) => {
   const [showItems, setShowItems] = useState({
     sort: false,
     author: false,
     genre: false,
   } as IFilterItemsShow);
 
+  const [genres, setGenres] = useState([] as Array<string>);
+  const [authors, setAuthors] = useState([] as Array<string>);
+  const [clickedSortBoxNumber, setClickedSortBoxNumber] = useState(2);
+
+  const [pressedButtons, setPressedButtons] = useState({
+    confirm: false,
+    cancel: false,
+  });
+
   const handlePriceChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     type: string
   ) => {
     if (e.target.value.length < 4)
-      setPriceProps((state) => ({
+      setFilterOptions((state) => ({
         ...state,
-        [type]: e.target.value,
+        price: {
+          ...state.price,
+          [type]: e.target.value as unknown as number,
+        },
       }));
   };
+
+  useEffect(() => {
+    setGenres(Array.from(new Set(books.map((book) => book.genre) || [])));
+    setAuthors(Array.from(new Set(books.map((book) => book.author) || [])));
+  }, [books]);
+
+  const sortHandler = (sortItemIndex: number) => {
+    if (
+      (sortItemIndex === 0 &&
+        filterOptions.sort === "From high price to low") ||
+      (sortItemIndex === 1 && filterOptions.sort === "From low price to high")
+    ) {
+      setFilterOptions((state) => ({ ...state, sort: "" }));
+      setClickedSortBoxNumber(2);
+    } else if (sortItemIndex === 0) {
+      setFilterOptions((state) => ({
+        ...state,
+        sort: "From high price to low",
+      }));
+      setClickedSortBoxNumber(0);
+    } else if (sortItemIndex === 1) {
+      setFilterOptions((state) => ({
+        ...state,
+        sort: "From low price to high",
+      }));
+      setClickedSortBoxNumber(1);
+    }
+  };
+
+  const filterAuthors = (index: number) => {
+    let currAuthors = filterOptions.author.slice();
+    if (filterOptions.author.includes(authors[index])) {
+      currAuthors = currAuthors.filter((author) => author !== authors[index]);
+    } else {
+      currAuthors.push(authors[index]);
+    }
+    setFilterOptions((state) => ({ ...state, author: currAuthors }));
+  };
+
+  const filterGenres = (index: number) => {
+    let currGenres = filterOptions.genre.slice();
+    if (filterOptions.genre.includes(genres[index])) {
+      currGenres = currGenres.filter((genre) => genre !== genres[index]);
+    } else {
+      currGenres.push(genres[index]);
+    }
+    setFilterOptions((state) => ({ ...state, genre: currGenres }));
+  };
+
+  useEffect(() => {
+    if (pressedButtons.confirm) {
+      let currBooks = books.slice();
+
+      if (filterOptions.author.length > 0) {
+        currBooks = currBooks.filter((book) =>
+          filterOptions.author.includes(book.author)
+        );
+      }
+
+      if (filterOptions.genre.length > 0) {
+        currBooks = currBooks.filter((book) =>
+          filterOptions.genre.includes(book.genre)
+        );
+      }
+
+      currBooks = currBooks.filter(
+        (book) =>
+          book.price <= filterOptions.price.to &&
+          book.price >= filterOptions.price.from
+      );
+
+      if (filterOptions.sort.length > 0) {
+        if (filterOptions.sort === "From high price to low") {
+          setBooks(
+            books.sort(function (a, b) {
+              return b.price - a.price;
+            })
+          );
+        } else if (filterOptions.sort === "From low price to high") {
+          setBooks(
+            books.sort(function (a, b) {
+              return a.price - b.price;
+            })
+          );
+        }
+      }
+
+      setFilteredBooks(currBooks);
+      setPressedButtons((state) => ({ ...state, confirm: false }));
+    } else if (pressedButtons.cancel) {
+      const prices = books.map((book) => book.price);
+      const minPrice = Math.min(...prices);
+      const maxPrice = Math.max(...prices);
+
+      setFilterOptions({
+        sort: "",
+        author: [],
+        genre: [],
+        price: { from: minPrice, to: maxPrice },
+      });
+      setClickedSortBoxNumber(2);
+      setFilteredBooks(books);
+      setPressedButtons((state) => ({ ...state, cancel: false }));
+    }
+  }, [pressedButtons]);
 
   return (
     <FilterWrapper>
@@ -191,9 +350,11 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
         <FilterShowedItem>
           <ST1>SORT</ST1>
           <PlusMinusButton
-            onClick={() =>
-              setShowItems((state) => ({ ...state, sort: !state.sort }))
-            }
+            onClick={() => {
+              setShowItems((state) => ({ ...state, sort: !state.sort }));
+              setFilterOptions((state) => ({ ...state, sort: "" }));
+              setClickedSortBoxNumber(2);
+            }}
           >
             {showItems.sort ? "–" : "+"}
           </PlusMinusButton>
@@ -202,7 +363,14 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
           <List>
             {sortItems.map((item, index) => (
               <ListItem key={index}>
-                <CheckMark /> {item}
+                <CheckMark
+                  updateChosencheckMarks={sortHandler}
+                  checkMarkIndex={index}
+                  hideChecking={
+                    clickedSortBoxNumber !== index || pressedButtons.cancel
+                  }
+                />{" "}
+                {item}
               </ListItem>
             ))}
           </List>
@@ -213,9 +381,12 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
         <FilterShowedItem>
           <ST1>AUTHOR</ST1>
           <PlusMinusButton
-            onClick={() =>
-              setShowItems((state) => ({ ...state, author: !state.author }))
-            }
+            onClick={() => {
+              setShowItems((state) => ({ ...state, author: !state.author }));
+              setFilterOptions((state) => ({ ...state, author: [] }));
+              if (showItems.author)
+                setPressedButtons((state) => ({ ...state, confirm: true }));
+            }}
           >
             {showItems.author ? "–" : "+"}
           </PlusMinusButton>
@@ -224,7 +395,12 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
           <List>
             {authors.map((item, index) => (
               <ListItem key={index}>
-                <CheckMark /> {item}
+                <CheckMark
+                  updateChosencheckMarks={filterAuthors}
+                  checkMarkIndex={index}
+                  hideChecking={pressedButtons.cancel}
+                />{" "}
+                {item}
               </ListItem>
             ))}
           </List>
@@ -235,9 +411,12 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
         <FilterShowedItem>
           <ST1>GENRE</ST1>
           <PlusMinusButton
-            onClick={() =>
-              setShowItems((state) => ({ ...state, genre: !state.genre }))
-            }
+            onClick={() => {
+              setShowItems((state) => ({ ...state, genre: !state.genre }));
+              setFilterOptions((state) => ({ ...state, genre: [] }));
+              if (showItems.genre)
+                setPressedButtons((state) => ({ ...state, confirm: true }));
+            }}
           >
             {showItems.genre ? "–" : "+"}
           </PlusMinusButton>
@@ -246,7 +425,12 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
           <List>
             {genres.map((item, index) => (
               <ListItem key={index}>
-                <CheckMark /> {item}
+                <CheckMark
+                  updateChosencheckMarks={filterGenres}
+                  checkMarkIndex={index}
+                  hideChecking={pressedButtons.cancel}
+                />{" "}
+                {item}
               </ListItem>
             ))}
           </List>
@@ -260,7 +444,7 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
             <PriceInputField
               placeholder="from"
               type="number"
-              value={priceProps.from}
+              value={filterOptions.price.from}
               onChange={(e) => handlePriceChange(e, "from")}
             />
             <UAHText>UAH</UAHText>
@@ -269,17 +453,27 @@ const FilterComp: React.FC<IFilterProps> = ({ isMobile = false }) => {
             <PriceInputField
               placeholder="to"
               type="number"
-              value={priceProps.to}
+              value={filterOptions.price.to}
               onChange={(e) => handlePriceChange(e, "to")}
             />
             <UAHText>UAH</UAHText>
           </PriceInputFieldWrapper>
         </PriceWrapper>
       </PriceFilterItem>
-      <Button isDark={true}>
+      <Button
+        isDark={true}
+        onClick={() =>
+          setPressedButtons((state) => ({ ...state, confirm: true }))
+        }
+      >
         <ST4 style={{ color: Color.White }}>CONFIRM</ST4>
       </Button>
-      <Button isDark={false}>
+      <Button
+        isDark={false}
+        onClick={() =>
+          setPressedButtons((state) => ({ ...state, cancel: true }))
+        }
+      >
         <ST4>CANCEL</ST4>
       </Button>
     </FilterWrapper>

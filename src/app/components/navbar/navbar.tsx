@@ -33,19 +33,26 @@ import {
   ClearOutlined,
   ExitToApp,
 } from "@mui/icons-material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IShowComponentProps,
   IAccountComponentProps,
   IBurgerProps,
+  INavBar,
 } from "./models";
 
-export const NavBar: React.FC = () => {
+export const NavBar: React.FC<INavBar> = ({
+  showBasketWhenAddBook = false,
+}) => {
   const [showBasket, setShowBasket] = useState(false);
   const [showAccount, setShowAccount] = useState(false);
   const [showBurgerMenu, setShowBurgerMenu] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setShowBasket(showBasketWhenAddBook);
+  }, [showBasketWhenAddBook]);
 
   const navBarClick = (item: string) => {
     switch (item) {

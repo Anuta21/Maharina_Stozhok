@@ -26,15 +26,47 @@ import {
 } from "./styles";
 import logo from "./images/visa-mastercard-logo.png";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Client } from "../../services";
+import { IRightPartPriceComponent } from "./models";
 
 export const PaymentPage: React.FC = () => {
   const { books } = useAppSelector((state) => state.persistedReducer.basket);
+  const { token, id } = useAppSelector((state) => state.persistedReducer.user);
+  const [activeConfirmButton, setActiveConfirmButton] = useState(true);
+
+  useEffect(() => {
+    setActiveConfirmButton(Object.values(books).length > 0);
+  }, [books]);
 
   const navigate = useNavigate();
+  const client = new Client();
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    function countPrice() {
+      const prices = Object.values(books).map(
+        (book) => book.price * book.number
+      );
+      const totalPrice = prices.reduce((num1, num2) => num1 + num2, 0);
+      setPrice(totalPrice);
+    }
+
+    if (Object.values(books) && Object.values(books).length > 0) countPrice();
+    else {
+      setPrice(0);
+    }
+  }, [books]);
+
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    navigate("/thanks");
+    if (activeConfirmButton) {
+      const orderId = (
+        await client.orders.putOrder({ userId: id, sum: price + 50 }, token)
+      ).data._id;
+      navigate("/thanks", { state: { orderId } });
+    }
   }
 
   return (
@@ -46,7 +78,7 @@ export const PaymentPage: React.FC = () => {
           <S1>All transactions are secure and encrypted</S1>
           <form onSubmit={handleSubmit}>
             <PaymentCardComponent />
-            <ConfirmButton type="submit">
+            <ConfirmButton type="submit" active={activeConfirmButton}>
               <TextButton>CONFIRM DELIVERY</TextButton>
             </ConfirmButton>
           </form>
@@ -68,29 +100,31 @@ export const PaymentPage: React.FC = () => {
               />
             ))}
           </BooksList>
-          <RightPartPriceComponent />
+          <RightPartPriceComponent price={price} />
         </RightPart>
       </MainContainer>
     </Wrapper>
   );
 };
 
-const RightPartPriceComponent: React.FC = () => {
+const RightPartPriceComponent: React.FC<IRightPartPriceComponent> = ({
+  price,
+}) => {
   return (
     <>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Subtotal</UnderlinedHeader>
-        <UnderlinedPrice>100 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price} hrn</UnderlinedPrice>
         <Line />
       </PriceUnderlinedItem>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Delivery</UnderlinedHeader>
-        <UnderlinedPrice>50 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price === 0 ? 0 : 50} hrn</UnderlinedPrice>
         <Line />
       </PriceUnderlinedItem>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Total</UnderlinedHeader>
-        <UnderlinedPrice>150 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price === 0 ? 0 : price + 50} hrn</UnderlinedPrice>
       </PriceUnderlinedItem>
     </>
   );

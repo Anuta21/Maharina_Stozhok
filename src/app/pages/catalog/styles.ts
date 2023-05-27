@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color, Images, S2, ST4 } from "../../common/assets";
-import { IButtonProps, IFilterProps } from "./models";
+import { IButtonProps, IFilterProps, IMobileProps } from "./models";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -61,8 +61,8 @@ export const BookCardWrapper = styled.div`
 
 export const BookImage = styled.img`
   margin: 10px 0;
-  width: 180px;
-  height: 270px;
+  width: 200px;
+  height: 100%;
 `;
 
 export const SearchInputField = styled.input`
@@ -165,7 +165,7 @@ export const FilterHeader = styled.div`
   width: 100%;
 `;
 
-export const FilterItem = styled.div<IFilterProps>`
+export const FilterItem = styled.div<IMobileProps>`
   border-bottom: 1px solid ${Color.Black};
   padding: 22px 0;
   width: 100%;
@@ -251,7 +251,7 @@ export const PriceWrapper = styled.div`
   justify-content: space-evenly;
 `;
 
-export const PriceFilterItem = styled.div<IFilterProps>`
+export const PriceFilterItem = styled.div<IMobileProps>`
   width: 100%;
   margin: 22px 0;
   ${(props) =>

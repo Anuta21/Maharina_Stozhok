@@ -20,3 +20,7 @@ export interface IBurgerProps {
 export interface IExitButtonProps {
   show: boolean;
 }
+
+export interface INavBar {
+  showBasketWhenAddBook?: boolean;
+}

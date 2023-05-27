@@ -19,15 +19,21 @@ import {
   OrderButton,
   TextButton,
 } from "./styles";
+import { useEffect, useState } from "react";
 
 export const DeliveryCardPage: React.FC = () => {
   const { books } = useAppSelector((state) => state.persistedReducer.basket);
+  const [activeOrderButton, setActiveOrderButton] = useState(true);
+
+  useEffect(() => {
+    setActiveOrderButton(Object.values(books).length > 0);
+  }, [books]);
 
   const navigate = useNavigate();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    navigate("/payment");
+    if (activeOrderButton) navigate("/payment");
   }
   return (
     <Wrapper>
@@ -39,7 +45,7 @@ export const DeliveryCardPage: React.FC = () => {
             <DeliveryForm />
             <T2>Free delivery from 1000 UAH purchase.</T2>
             <T2>Free book available for all order over 2000 UAH.</T2>
-            <OrderButton type="submit">
+            <OrderButton type="submit" active={activeOrderButton}>
               <TextButton>ORDER</TextButton>
             </OrderButton>
           </form>
@@ -90,21 +96,39 @@ export const DeliveryForm: React.FC = () => {
 };
 
 export const RightPartPriceComponent: React.FC = () => {
+  const { books } = useAppSelector((state) => state.persistedReducer.basket);
+
+  const [price, setPrice] = useState(0);
+
+  useEffect(() => {
+    function countPrice() {
+      const prices = Object.values(books).map(
+        (book) => book.price * book.number
+      );
+      const totalPrice = prices.reduce((num1, num2) => num1 + num2, 0);
+      setPrice(totalPrice);
+    }
+
+    if (Object.values(books) && Object.values(books).length > 0) countPrice();
+    else {
+      setPrice(0);
+    }
+  }, [books]);
   return (
     <>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Subtotal</UnderlinedHeader>
-        <UnderlinedPrice>100 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price} hrn</UnderlinedPrice>
         <Line />
       </PriceUnderlinedItem>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Delivery</UnderlinedHeader>
-        <UnderlinedPrice>50 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price === 0 ? 0 : 50} hrn</UnderlinedPrice>
         <Line />
       </PriceUnderlinedItem>
       <PriceUnderlinedItem>
         <UnderlinedHeader>Total</UnderlinedHeader>
-        <UnderlinedPrice>150 hrn</UnderlinedPrice>
+        <UnderlinedPrice>{price === 0 ? 0 : price + 50} hrn</UnderlinedPrice>
       </PriceUnderlinedItem>
     </>
   );

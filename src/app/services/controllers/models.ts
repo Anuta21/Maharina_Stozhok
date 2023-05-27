@@ -32,3 +32,12 @@ export interface ISighUpRequestBody {
   email: string;
   password: string;
 }
+
+export interface IOrder {
+  userId: string;
+  sum: number;
+}
+
+export interface IOrderResponse {
+  _id: string;
+}

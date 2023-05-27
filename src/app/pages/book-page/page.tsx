@@ -36,6 +36,7 @@ export const BookPage: React.FC = () => {
   const { id } = useParams();
   const [book, setBook] = useState({} as IBook);
   const [estimate, setEstimate] = useState(0);
+  const [showBasket, setShowBasket] = useState(false);
 
   const client = new Client();
 
@@ -59,6 +60,8 @@ export const BookPage: React.FC = () => {
         })
       );
     }
+
+    setShowBasket(true);
   };
 
   useEffect(() => {
@@ -93,7 +96,7 @@ export const BookPage: React.FC = () => {
     <>
       {book.title && (
         <>
-          <NavBar />
+          <NavBar showBasketWhenAddBook={showBasket} />
           <Wrapper>
             <BookCard>
               <ImageWrapper src={book.imageUrl}></ImageWrapper>
