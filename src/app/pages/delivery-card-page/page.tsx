@@ -24,6 +24,7 @@ import { useEffect, useState } from "react";
 export const DeliveryCardPage: React.FC = () => {
   const { books } = useAppSelector((state) => state.persistedReducer.basket);
   const [activeOrderButton, setActiveOrderButton] = useState(true);
+  const { token } = useAppSelector((state) => state.persistedReducer.user);
 
   useEffect(() => {
     setActiveOrderButton(Object.values(books).length > 0);
@@ -33,7 +34,8 @@ export const DeliveryCardPage: React.FC = () => {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (activeOrderButton) navigate("/payment");
+    if (activeOrderButton && token !== "" && token) navigate("/payment");
+    else if (token === "") navigate("/login");
   }
   return (
     <Wrapper>
