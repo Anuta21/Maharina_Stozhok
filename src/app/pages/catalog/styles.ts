@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Color, Images, S2, ST4 } from "../../common/assets";
-import { IButtonProps, IFilterProps, IMobileProps } from "./models";
+import { IButtonProps, IMobileProps } from "./models";
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -226,6 +226,8 @@ export const PriceInputField = styled.input`
     color: ${Color.Highlight};
     opacity: 1;
   }
+
+  appearance: textfield;
 
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
