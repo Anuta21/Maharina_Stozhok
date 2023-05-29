@@ -30,12 +30,11 @@ import {
   MobileFilterWrapper,
   OrdinaryFilterWrapper,
 } from "./styles";
-import { sortItems, genres, authors } from "./constants";
+import { sortItems } from "./constants";
 import {
   IBookData,
   IFilterItemsShow,
   IFilterOptions,
-  IFilterPriceProps,
   IFilterProps,
 } from "./models";
 
@@ -106,8 +105,6 @@ export const CatalogPage: React.FC = () => {
 
     getBooks();
   }, []);
-
-  useEffect(() => {}, [filterOptions]);
 
   return (
     <>

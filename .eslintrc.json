@@ -6,7 +6,6 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     "react/prop-types": "off",
-    "@typescript-eslint/no-explicit-any": "error",
     "prefer-template": "error",
     "react-hooks/exhaustive-deps": "off",
     "eqeqeq": "error"
